@@ -1,0 +1,37 @@
+.advantages_section {
+    padding-top: 108px;
+    padding-bottom: 108px;
+    background-color: var(--color-text-light);
+}
+
+.advantages {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 160px;
+    margin-top: 78px;
+}
+
+.advantages_title {
+    color: var(--color-dark-primary);
+    max-width: 445px;
+}
+
+.item {
+    max-width: 325px;
+    text-align: center;
+}
+
+
+.main_text {
+    margin-bottom: 10px;
+    color: var(--color-green);
+    font-size: 40px;
+}
+
+.text {
+    color: var(--color-dark-primary);
+    font-size: 20px;
+    font-weight: 400;
+}

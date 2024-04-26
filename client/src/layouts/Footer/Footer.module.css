@@ -1,0 +1,48 @@
+footer {
+    padding: 80px 50px 25px;
+    border-top: 3px solid var(--color-grey);
+}
+
+.wrapper {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    column-gap: 100px;
+    margin-bottom: 55px;
+}
+
+li {
+    margin-top: 10px;
+}
+
+li:first-child{
+    margin-top: 14px;
+}
+
+.item_list {
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--color-grey);
+}
+
+.text {
+    color: var(--color-text-light);
+    text-align: center;
+    font-size: 32px;
+}
+
+.social_networks {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 18px;
+}
+
+.privacy_policy {
+    display: block;
+    width: max-content;
+    margin-left: auto; 
+    font-size: 14px;
+    color: var(--color-grey)
+}

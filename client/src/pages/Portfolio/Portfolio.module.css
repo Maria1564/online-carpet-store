@@ -1,0 +1,13 @@
+.portfolio {
+    background: linear-gradient(121deg, #102B3E -0.62%, #145B5B 70.35%, #167C6F 97.55%, #1AAC8C 107.73%);
+    padding-top: 88px;
+}
+
+.box {
+    columns: 3 492px;
+    column-gap: 30px;
+}
+
+.item {
+    margin-bottom: 20px;
+}

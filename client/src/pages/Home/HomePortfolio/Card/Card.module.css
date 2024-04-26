@@ -1,0 +1,64 @@
+.card {
+    position: relative;
+    width: 425px;
+    height: 540px;
+    border-radius: 20px;
+    overflow: hidden;
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.card_img{
+    width: 100%;
+    height: 100%;
+    border: 8px solid #1BC89F;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.card_img  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+} 
+
+.card:hover .card_img{
+    filter: blur(2px);
+}
+
+.card_content {
+    position: absolute;
+    display: block;
+    width: 100%;
+    padding: 76px 0;
+    background: #000000ba;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    word-break: break-word; /* Перенос слов */ 
+    transform: translateY(100%);
+    transition: transform .6s;
+}
+
+.card_content > p {
+    font-size: 32px;
+    color: var(--color-text-light);
+    margin: auto;
+    text-align: center;
+    width: 200px;
+}
+
+
+.card:hover .card_content{
+    transform: translateY(0%);
+}
+
+@media screen and (max-width: 1470px) {
+    .card {
+        width: 100%;
+        height: 373px
+    }
+}
+

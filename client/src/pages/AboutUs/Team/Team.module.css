@@ -1,0 +1,26 @@
+.team_section {
+    padding-top: 0;
+    padding-bottom: 128px;
+}
+
+.team {
+    display: flex;
+    gap: 110px;
+    align-items: start;
+    justify-content: center;
+    flex-wrap: wrap;
+    text-align: center;
+    margin-top: 51px;
+}
+
+.team p {
+    color: var(--color-text-light);
+}
+
+
+
+@media screen and (max-width: 1035px) {
+    .team {
+        gap: 60px;
+    }
+}

@@ -1,0 +1,30 @@
+.quotation {
+    padding: 147px 0;
+}
+
+.box {
+    position: relative;
+    padding: 80px 84px;
+}
+
+.box::before{
+    content: url("../../../assets/img/double_quote_left.svg");
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.box::after {
+    content: url("../../../assets/img/double_quote_right.svg");
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.text {
+    max-width: 372px;
+    color: var(--color-grey);
+    font-family: Anonymous Pro;
+    font-size: 24px;
+    font-weight: 400;
+}

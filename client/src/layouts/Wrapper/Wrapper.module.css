@@ -1,0 +1,7 @@
+.wrapper  {
+    width: 100%;
+    background: url("../../assets/img/wrapp_bg.png") no-repeat center / cover;
+    background-color: var(--color-dark-primary);
+    text-align: center;
+    padding: 93px 0;
+}

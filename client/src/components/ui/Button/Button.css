@@ -1,0 +1,19 @@
+.btn {
+    background: var(--color-green);
+    border: 2px solid #ffffff00;
+    border-radius: 8px;
+    padding: 15px 44px;
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.btn:hover{
+    background: var(--color-dark-primary);
+    border: 2px solid var(--color-text-light);
+    transform: scale(1.2);
+}
+
+.btn > a{
+    font-size: 20px;
+    color: var(--color-text-light);
+}
