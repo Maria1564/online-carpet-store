@@ -4,7 +4,7 @@ const multer = require("multer")
 
 const ProductsController =  require("./controllers/productController.js")
 const UserController = require("./controllers/userController.js")
-const validation = require("./middleware/validationAuth.js")
+const {registerValidation, loginValidation} = require("./middleware/validationAuth.js")
 const  app = express()
 const PORT = 5000
 
@@ -39,8 +39,8 @@ app.get("/products/top", ProductsController.getTopProducts)
 
 
 //Пользоваель (запросы)
-app.post("/auth/register", validation.registerValidation , UserController.register)
-// app.post("/auth/login", UserController.login)
+app.post("/auth/register", registerValidation, UserController.register)
+app.post("/auth/login", loginValidation, UserController.login)
 // app.get("/auth/me", UserController.getMe)
 
 

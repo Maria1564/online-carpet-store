@@ -1,5 +1,6 @@
 const db = require("../db.js")
 const bcrypt = require("bcrypt")
+const jwt = require("jsonwebtoken")
 const {validationResult} = require("express-validator")
 
 
@@ -30,7 +31,55 @@ const register = async(req, res)=>{
 }
 
 //аутентификация (вход в аккаунт)
-const login = (req, res)=>{}
+const login = async (req, res)=>{
+    try{
+
+        const errors = validationResult(req)
+        if(!errors.isEmpty()){
+            return res.json(errors)
+        }
+        const {email, password} =req.body
+
+        const  user = await db.query("SELECT * FROM  Users WHERE email = $1", [email])
+        if(!user.rows.length) {
+            return res.json({
+                message: "Пользователь не найден"
+            })
+        }
+
+        const validPassword = await bcrypt.compare(password, user.rows[0].passwordhash)
+        if(!validPassword){
+           return res.json({
+                message: "Неверный логин или пароль"
+            })
+        }
+
+        //генерация токена
+        const token = jwt.sign(
+            {
+                id: user.rows[0].id,
+                email
+            },
+            "secretKey",
+            {
+                expiresIn:"5h" //!
+            }
+        )
+
+        
+        const {passwordhash, ...infoUser} = user.rows[0]
+
+        res.json({
+            ...infoUser,
+            token
+        })
+
+    }catch(err){
+        res.json({
+            message: "Неверный логин или пароль"
+        })
+    }
+}
 
 //получение своих данных
 const getMe = (req, res)=>{}
