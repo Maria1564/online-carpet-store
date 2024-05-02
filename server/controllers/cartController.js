@@ -40,6 +40,7 @@ const getAll = async(req, res)=>{
                 message: "Не получилось показать товары корзины"
             })
         }
+        
         const cartData = await db.query(`SELECT Cart.id, idUser, imagePath, nameProduct, Sizes.name , quantity
         FROM  Cart, Products, Sizes, Users WHERE idUser = $1 and
         Cart.idUser = Users.id and   Cart.idProduct = Products.id and Cart.idSize = Sizes.id`, [req.body.idUser])

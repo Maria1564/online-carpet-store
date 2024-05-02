@@ -7,6 +7,7 @@ const PORT = 5000
 const ProductsController =  require("./controllers/productController.js")
 const UserController = require("./controllers/userController.js")
 const cartController = require("./controllers/cartController.js")
+const favoriteController = require("./controllers/favoriteCollection.js")
 const {registerValidation, loginValidation} = require("./middleware/validationAuth.js")
 const checkAuth = require("./middleware/checkAuth.js")
 
@@ -52,6 +53,11 @@ app.post("/cart", checkAuth, cartController.addProduct)
 app.patch("/cart", checkAuth, cartController.plusOrMinusProduct)
 app.delete("/cart", checkAuth, cartController.remove)
 app.delete("/cart/clear", checkAuth, cartController.removeAll)
+
+//Избранное (запросы)
+app.get("/favorites", checkAuth, favoriteController.getAll)
+app.post("/favorites", checkAuth, favoriteController.addFavorite)
+// app.delete("/favorites", checkAuth, )
 
 //Создание сервера
 app.listen(PORT, (err)=>{
