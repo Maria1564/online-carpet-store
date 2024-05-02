@@ -8,7 +8,7 @@ const addProduct = async(req, res)=>{
 
         if(req.id != idUser){
             return res.status(400).json({
-                message: "Неполучилось добавить товар в корзину"
+                message: "Не получилось добавить товар в корзину"
             })
         }
 
@@ -25,7 +25,7 @@ const addProduct = async(req, res)=>{
     }catch(err){
         console.log(err.message)
         res.status(400).json({
-            message: "Неполучилось добавить товар в корзину"
+            message: "Не получилось добавить товар в корзину"
         })
     }
 }
@@ -37,7 +37,7 @@ const getAll = async(req, res)=>{
         
         if(req.id != req.body.idUser){
             return res.status(400).json({
-                message: "Неполучилось добавить товар в корзину"
+                message: "Не получилось показать товары корзины"
             })
         }
         const cartData = await db.query(`SELECT Cart.id, idUser, imagePath, nameProduct, Sizes.name , quantity
@@ -50,7 +50,7 @@ const getAll = async(req, res)=>{
     }catch(err){
         console.log(err.message)
         res.status(400).json({
-            message: "Неполучилось показать товары корзины"
+            message: "Не получилось показать товары корзины"
         })
     }
 }
@@ -63,7 +63,7 @@ const plusOrMinusProduct = async(req, res)=>{
 
         if(req.id != idUser){
             return res.status(400).json({
-                message: "Невозможно изменть количесвто товара"
+                message: "Невозможно изменить количество товара"
             })
         }
 
@@ -77,7 +77,52 @@ const plusOrMinusProduct = async(req, res)=>{
     }catch(err){
         console.log(err.message)
         res.status(400).json({
-            message: "Невозможно изменть количесвто товара"
+            message: "Невозможно изменить количество товара"
+        })
+    }
+}
+
+//удаление товара 
+const remove = async(req, res)=>{
+    try{
+        
+        if(req.id != req.body.idUser){
+            return res.status(400).json({
+                message: "Не получилось убрать товар из корзины"
+            })
+        }
+        
+        const cartData = await db.query(`DELETE  FROM Cart WHERE id = $1 RETURNING *`, [req.body.idCart] )
+        console.log(cartData)
+        if(!cartData.rows.length){
+            return res.status(400).json({
+                message: "Нет данного товара"
+            })
+        }
+
+        res.json({
+            idCart: cartData.rows[0].id
+        })
+
+    }catch(err){
+        console.log(err.message)
+        res.status(400).json({
+            message: "Не получилось убрать товар из корзины"
+        })
+    }
+}
+
+//очистка корзины
+const removeAll = async(req, res)=>{
+    try{
+        await db.query(`DELETE  FROM Cart WHERE idUser = $1`, [req.id])
+        res.json({
+            cart: []
+        })
+    }catch(err){
+        console.log(err.message)
+        res.status(400).json({
+            message: "Не удалось очистить корзину"
         })
     }
 }
@@ -85,5 +130,7 @@ const plusOrMinusProduct = async(req, res)=>{
 module.exports = {
     addProduct,
     getAll,
-    plusOrMinusProduct
+    plusOrMinusProduct,
+    remove,
+    removeAll
 }

@@ -50,8 +50,8 @@ app.get("/auth/me", checkAuth, UserController.getMe)
 app.get("/cart", checkAuth, cartController.getAll)
 app.post("/cart", checkAuth, cartController.addProduct)
 app.patch("/cart", checkAuth, cartController.plusOrMinusProduct)
-// app.post("/cart", checkAuth)
-// app.post("/cart", checkAuth)
+app.delete("/cart", checkAuth, cartController.remove)
+app.delete("/cart/clear", checkAuth, cartController.removeAll)
 
 //Создание сервера
 app.listen(PORT, (err)=>{
