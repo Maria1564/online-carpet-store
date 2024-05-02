@@ -46,10 +46,10 @@ app.post("/auth/login", loginValidation, UserController.login)
 app.get("/auth/me", checkAuth, UserController.getMe)
 
 
-//Корзина
+//Корзина (запросы)
 app.get("/cart", checkAuth, cartController.getAll)
 app.post("/cart", checkAuth, cartController.addProduct)
-// app.post("/cart", checkAuth)
+app.patch("/cart", checkAuth, cartController.plusOrMinusProduct)
 // app.post("/cart", checkAuth)
 // app.post("/cart", checkAuth)
 

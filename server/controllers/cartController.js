@@ -55,7 +55,35 @@ const getAll = async(req, res)=>{
     }
 }
 
+
+//изменеие кол-ва товара
+const plusOrMinusProduct = async(req, res)=>{
+    try{
+        const {idCart, idUser, quantity} = req.body
+
+        if(req.id != idUser){
+            return res.status(400).json({
+                message: "Невозможно изменть количесвто товара"
+            })
+        }
+
+        const cartData  = await db.query(`UPDATE Cart  SET quantity = $1  WHERE id=$2 RETURNING *`, [quantity, idCart] )
+        
+        res.json({
+            idCart: cartData.rows[0].id,
+            quantity: cartData.rows[0].quantity
+        })
+
+    }catch(err){
+        console.log(err.message)
+        res.status(400).json({
+            message: "Невозможно изменть количесвто товара"
+        })
+    }
+}
+
 module.exports = {
     addProduct,
-    getAll
+    getAll,
+    plusOrMinusProduct
 }
