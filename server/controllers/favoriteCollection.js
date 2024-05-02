@@ -26,6 +26,8 @@ const addFavorite = async(req, res)=>{
         FROM Favorites, Products, Users 
         WHERE Favorites.idUser = Users.id and Favorites.idProduct = Products.id and idUser = $1  and idProduct = $2`, [req.id, req.body.idProduct])
 
+        await db.query(`UPDATE Products  SET favoritesСount = favoritesСount + 1  WHERE id=$1 `, [req.body.idProduct] )
+
         res.json(favoriteData.rows[0])
 
     }catch(err){
