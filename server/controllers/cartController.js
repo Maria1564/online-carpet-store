@@ -31,6 +31,31 @@ const addProduct = async(req, res)=>{
 }
 
 
+//получене всех товаров
+const getAll = async(req, res)=>{
+    try{
+        
+        if(req.id != req.body.idUser){
+            return res.status(400).json({
+                message: "Неполучилось добавить товар в корзину"
+            })
+        }
+        const cartData = await db.query(`SELECT Cart.id, idUser, imagePath, nameProduct, Sizes.name , quantity
+        FROM  Cart, Products, Sizes, Users WHERE idUser = $1 and
+        Cart.idUser = Users.id and   Cart.idProduct = Products.id and Cart.idSize = Sizes.id`, [req.body.idUser])
+
+
+        res.json(cartData.rows)
+
+    }catch(err){
+        console.log(err.message)
+        res.status(400).json({
+            message: "Неполучилось показать товары корзины"
+        })
+    }
+}
+
 module.exports = {
-    addProduct
+    addProduct,
+    getAll
 }

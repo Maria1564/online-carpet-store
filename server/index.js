@@ -47,7 +47,7 @@ app.get("/auth/me", checkAuth, UserController.getMe)
 
 
 //Корзина
-// app.get("/cart", checkAuth)
+app.get("/cart", checkAuth, cartController.getAll)
 app.post("/cart", checkAuth, cartController.addProduct)
 // app.post("/cart", checkAuth)
 // app.post("/cart", checkAuth)
