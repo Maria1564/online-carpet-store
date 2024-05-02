@@ -57,7 +57,7 @@ app.delete("/cart/clear", checkAuth, cartController.removeAll)
 //Избранное (запросы)
 app.get("/favorites", checkAuth, favoriteController.getAll)
 app.post("/favorites", checkAuth, favoriteController.addFavorite)
-// app.delete("/favorites", checkAuth, )
+app.delete("/favorites", checkAuth, favoriteController.removeOne)
 
 //Создание сервера
 app.listen(PORT, (err)=>{
