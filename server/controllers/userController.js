@@ -9,7 +9,7 @@ const register = async(req, res)=>{
     try{
         const errors = validationResult(req)
         if(!errors.isEmpty()){
-            return res.json(errors)
+            return res.status(400).json(errors)
         }
 
         const {fullName, email, password} =  req.body
@@ -22,8 +22,8 @@ const register = async(req, res)=>{
         res.json(user.rows[0])
 
     }catch(err){
-        console.log(err)
-        res.json({
+        console.log(err.message)
+        res.status(400).json({
             message: "Не удалось зарегистрирвоаться"
         })
     }
@@ -36,20 +36,20 @@ const login = async (req, res)=>{
 
         const errors = validationResult(req)
         if(!errors.isEmpty()){
-            return res.json(errors)
+            return res.status(400).json(errors)
         }
         const {email, password} =req.body
 
         const  user = await db.query("SELECT * FROM  Users WHERE email = $1", [email])
         if(!user.rows.length) {
-            return res.json({
+            return res.status(400).json({
                 message: "Пользователь не найден"
             })
         }
 
         const validPassword = await bcrypt.compare(password, user.rows[0].passwordhash)
         if(!validPassword){
-           return res.json({
+           return res.status(400).json({
                 message: "Неверный логин или пароль"
             })
         }
@@ -62,7 +62,7 @@ const login = async (req, res)=>{
             },
             "secretKey",
             {
-                expiresIn:"5h" //!
+                expiresIn:"1d" //!
             }
         )
 
@@ -75,14 +75,25 @@ const login = async (req, res)=>{
         })
 
     }catch(err){
-        res.json({
+        res.status(400).json({
             message: "Неверный логин или пароль"
         })
     }
 }
 
 //получение своих данных
-const getMe = (req, res)=>{}
+const getMe = async(req, res)=>{
+    try{
+        const  user = await db.query("SELECT * FROM  Users WHERE email = $1", [req.email])
+        const {passwordhash, ...infoUser} = user.rows[0]
+
+        res.json(infoUser)
+    }catch(err){
+        res.status(400).json({
+            message: "Не авторизованы"
+        })
+    }
+}
 
 module.exports = {
     register,

@@ -1,12 +1,13 @@
 const express = require("express")
 const multer = require("multer")
 
+const  app = express()
+const PORT = 5000
 
 const ProductsController =  require("./controllers/productController.js")
 const UserController = require("./controllers/userController.js")
 const {registerValidation, loginValidation} = require("./middleware/validationAuth.js")
-const  app = express()
-const PORT = 5000
+const checkAuth = require("./middleware/checkAuth.js")
 
 app.use(express.json())
 app.use("/uploads", express.static("uploads"))
@@ -41,7 +42,7 @@ app.get("/products/top", ProductsController.getTopProducts)
 //Пользоваель (запросы)
 app.post("/auth/register", registerValidation, UserController.register)
 app.post("/auth/login", loginValidation, UserController.login)
-// app.get("/auth/me", UserController.getMe)
+app.get("/auth/me", checkAuth, UserController.getMe)
 
 
 //Создание сервера
