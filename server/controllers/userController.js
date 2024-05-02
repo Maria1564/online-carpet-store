@@ -84,7 +84,7 @@ const login = async (req, res)=>{
 //получение своих данных
 const getMe = async(req, res)=>{
     try{
-        const  user = await db.query("SELECT * FROM  Users WHERE email = $1", [req.email])
+        const  user = await db.query("SELECT * FROM  Users WHERE id = $1", [req.id])
         const {passwordhash, ...infoUser} = user.rows[0]
 
         res.json(infoUser)

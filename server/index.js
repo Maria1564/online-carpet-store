@@ -6,6 +6,7 @@ const PORT = 5000
 
 const ProductsController =  require("./controllers/productController.js")
 const UserController = require("./controllers/userController.js")
+const cartController = require("./controllers/cartController.js")
 const {registerValidation, loginValidation} = require("./middleware/validationAuth.js")
 const checkAuth = require("./middleware/checkAuth.js")
 
@@ -44,6 +45,13 @@ app.post("/auth/register", registerValidation, UserController.register)
 app.post("/auth/login", loginValidation, UserController.login)
 app.get("/auth/me", checkAuth, UserController.getMe)
 
+
+//Корзина
+// app.get("/cart", checkAuth)
+app.post("/cart", checkAuth, cartController.addProduct)
+// app.post("/cart", checkAuth)
+// app.post("/cart", checkAuth)
+// app.post("/cart", checkAuth)
 
 //Создание сервера
 app.listen(PORT, (err)=>{
