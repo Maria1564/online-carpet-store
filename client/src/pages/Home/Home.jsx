@@ -4,7 +4,9 @@ import HomeAbout from "./HomeAbout/HomeAbout";
 import HomePortfolio from "./HomePortfolio/HomePortfolio";
 import HomeReviews from "./HomeReviews/HomeReviews";
 
+
 const Home = () => {
+
   return (
     <div className={s.Home}>
       <div className={s.wrapper}>

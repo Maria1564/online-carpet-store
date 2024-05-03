@@ -1,5 +1,6 @@
 const express = require("express")
 const multer = require("multer")
+const cors = require("cors")
 
 const  app = express()
 const PORT = 5000
@@ -14,6 +15,7 @@ const {registerValidation, loginValidation} = require("./middleware/validationAu
 const checkAuth = require("./middleware/checkAuth.js")
 
 app.use(express.json())
+app.use(cors())
 app.use("/uploads", express.static("uploads"))
 
 
@@ -62,7 +64,7 @@ app.post("/favorites", checkAuth, favoriteController.addFavorite)
 app.delete("/favorites", checkAuth, favoriteController.removeOne)
 
 //Заказы (запрос)
-app.post("/orders", orderController.create  )
+app.post("/orders", orderController.create)
 
 //Создание сервера
 app.listen(PORT, (err)=>{

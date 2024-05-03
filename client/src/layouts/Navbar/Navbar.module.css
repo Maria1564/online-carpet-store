@@ -18,6 +18,10 @@ header {
     gap: 30px;
 }
 
+.menu li:first-child, li {
+    margin-top: 0;
+}
+
 a{
     position: relative;
     color: var(--color-text-light);
@@ -33,6 +37,25 @@ a{
     background: var(--color-green);
     bottom: -5px;
     left: 0;
+}
+
+.auth {
+    margin-left: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.auth_link{
+    font-size: 18px;
+    border: 2px solid var(--color-text-light);
+    padding: 15px 10px;
+    border-radius: 10px;
+    transition: background .8s;
+}
+
+.auth_link:hover{
+    background: #d4d3d381;
 }
 
 @media screen and (max-width: 1035px) {
