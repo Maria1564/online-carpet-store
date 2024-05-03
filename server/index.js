@@ -8,6 +8,8 @@ const ProductsController =  require("./controllers/productController.js")
 const UserController = require("./controllers/userController.js")
 const cartController = require("./controllers/cartController.js")
 const favoriteController = require("./controllers/favoriteCollection.js")
+const orderController = require("./controllers/orderController.js")
+
 const {registerValidation, loginValidation} = require("./middleware/validationAuth.js")
 const checkAuth = require("./middleware/checkAuth.js")
 
@@ -58,6 +60,9 @@ app.delete("/cart/clear", checkAuth, cartController.removeAll)
 app.get("/favorites", checkAuth, favoriteController.getAll)
 app.post("/favorites", checkAuth, favoriteController.addFavorite)
 app.delete("/favorites", checkAuth, favoriteController.removeOne)
+
+//Заказы (запрос)
+app.post("/orders", orderController.create  )
 
 //Создание сервера
 app.listen(PORT, (err)=>{
