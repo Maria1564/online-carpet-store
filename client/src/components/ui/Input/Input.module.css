@@ -1,0 +1,21 @@
+.input {
+    border: none;
+    border-bottom: 2px solid var(--color-green);
+    background: inherit;
+    font-family: inherit;
+    font-size: 18px;
+    padding: 15px 28px;
+    color: var(--color-text-light);
+    width: 60%;
+    text-align: center;
+}
+
+.input::placeholder{
+    color: var(--color-grey);
+    font-size: 14px;
+}
+
+.input:focus {
+    outline: none;
+    border-color: var(--color-text-light);
+}

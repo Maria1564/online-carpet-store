@@ -4,9 +4,11 @@ import { Link } from 'react-router-dom'
 
 
 
-const Button = ({text, to}) => {
+const Button = ({text, to = "", type="button"}) => {
+  
+  
   return (
-    <button type='button' className="btn"><Link to={`/${to}`}>{text}</Link></button>
+   (to ? <button type={type} className="btn"><Link to={`/${to}`}>{text}</Link></button>: <button type={type} className="btn"><Link>{text}</Link></button>)
   )
 }
 

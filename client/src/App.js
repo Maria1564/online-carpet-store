@@ -5,6 +5,7 @@ import Reviews from "./pages/Reviews/Reviews";
 import Footer from "./layouts/Footer/Footer";
 import Navbar from "./layouts/Navbar/Navbar";
 import { Routes, Route } from "react-router-dom";
+import Register from "./pages/Authorization/Register/Register";
 
 function App() {
 
@@ -19,6 +20,8 @@ function App() {
           <Route path="/aboutUs" element={<AboutUs />}></Route>
           {/* <Route path="/portfolio" element={<Portfolio />}></Route> */}
           <Route path="/reviews" element={<Reviews />}></Route>
+
+          <Route path="/register" element={<Register/>}></Route>
         </Routes>
       </main>
 

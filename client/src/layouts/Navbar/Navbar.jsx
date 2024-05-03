@@ -17,7 +17,7 @@ const Navbar = () => {
           <li><NavLink to="/reviews" className={setActive}>Отзывы</NavLink></li>
           <div className={s.auth}>
             <li>
-              <Link className={s.auth_link} to="/register">Зарегистироваться</Link>
+              <Link className={s.auth_link} to="/register">Регистрация</Link>
             </li>
             <li>
               <Link className={s.auth_link} to="/login">Вход</Link>
