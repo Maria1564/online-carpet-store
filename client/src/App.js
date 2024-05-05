@@ -1,7 +1,7 @@
 import AboutUs from "./pages/AboutUs/AboutUs";
 import Home from "./pages/Home/Home";
 // import Portfolio from "./pages/Portfolio/Portfolio";
-import Reviews from "./pages/Reviews/Reviews";
+// import Reviews from "./pages/Reviews/Reviews";
 import Footer from "./layouts/Footer/Footer";
 import Navbar from "./layouts/Navbar/Navbar";
 import { Routes, Route } from "react-router-dom";
@@ -10,6 +10,7 @@ import Login from "./pages/Authorization/Login/Login";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { fetchData } from "./redux/slices/auth";
+import Catalog from "./pages/Catalog/Catalog";
 
 
 function App() {
@@ -26,8 +27,9 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />}></Route>
           <Route path="/aboutUs" element={<AboutUs />}></Route>
+          <Route path="/catalog"element={<Catalog/>}></Route>
           {/* <Route path="/portfolio" element={<Portfolio />}></Route> */}
-          <Route path="/reviews" element={<Reviews />}></Route>
+          {/* <Route path="/reviews" element={<Reviews />}></Route> */}
 
           <Route path="/register" element={<Register/>}></Route>
           <Route path="/login" element={<Login/>}></Route>

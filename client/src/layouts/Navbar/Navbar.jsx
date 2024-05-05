@@ -4,6 +4,7 @@ import { NavLink, Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { logout } from '../../redux/slices/auth'
 
+
 const setActive = ({isActive})=>isActive? s.active: ""
 const Navbar = ({isAuth}) => {
 
@@ -24,7 +25,7 @@ const Navbar = ({isAuth}) => {
           <li><NavLink to="/" className={setActive} >Главная</NavLink></li>
           <li><NavLink to="/aboutUs" className={setActive}>О нас</NavLink></li>
           <li><NavLink to="/catalog" className={setActive}>Каталог</NavLink></li>
-          <li><NavLink to="/reviews" className={setActive}>Отзывы</NavLink></li>
+          {/* <li><NavLink to="/reviews" className={setActive}>Отзывы</NavLink></li> */}
           {isAuth ?  
           <div className={s.auth}>
             <li>

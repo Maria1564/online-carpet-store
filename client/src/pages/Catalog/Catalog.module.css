@@ -1,0 +1,70 @@
+
+.cards {
+    margin: 10px 80px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 35px 40px;
+}
+
+.card {
+    /* background-color: #92a5bc; */
+    max-width: max-content;
+    padding: 20px;
+    border-radius: 9px;
+    border: 2px solid #748594;
+    box-shadow: 3px 1px 6px 0px rgb(105 122 134);
+    user-select:none;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; 
+}
+
+.img_product {
+    max-height: 280px;
+    max-width: 243px;
+    border-radius: 10px;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto;
+}
+
+.name {
+    font-size: 24px;
+    font-weight: 700;
+    display: block;
+    margin-top: 20px;
+    padding-bottom: 38px;
+    text-transform: uppercase;
+    max-width: 250px;
+    word-wrap: break-word;
+}
+
+.icon_heart  {
+    width: 42px;
+    height: 42px;
+    cursor: pointer;
+    fill: var(--color-text-light);
+    transition: all .5s;
+}
+
+.btns {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 25px;
+    margin-top: auto;
+    width: max-content;
+}
+
+.btn_catalog {
+    flex-grow: 1;
+}
+
+.btn_catalog:hover{ 
+    transform: none;
+}
+
+.icon_heart:hover {
+    transform: scale(1.2);
+    fill: red;
+}
