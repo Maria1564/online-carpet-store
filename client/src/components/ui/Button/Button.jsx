@@ -8,7 +8,7 @@ const Button = ({text, to = "", type="button"}) => {
   
   
   return (
-   (to ? <button type={type} className="btn"><Link to={`/${to}`}>{text}</Link></button>: <button type={type} className="btn"><Link>{text}</Link></button>)
+   (to ? <button type={type} className="btn"><Link to={`/${to}`}>{text}</Link></button>: <button type={type} className="btn">{text}</button>)
   )
 }
 

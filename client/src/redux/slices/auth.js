@@ -4,15 +4,17 @@ import axios from "../../axios";
 export const registerUser = createAsyncThunk("auth/registerUser", async(params,{rejectWithValue})=>{
     try {
         console.log("params >> ", params)
-        const res = await axios.post("/auth/register", {params})
+        const res = await axios.post("/auth/register", params)
      
         return res.data
 
     } catch (err) {
         console.log(err.message)
-        return rejectWithValue(err.message)
+        return rejectWithValue("Не удалось зарегестрироватся. Попробуйте ввести другой email")
     }
 })
+
+
 
 const initialState = {
     infoUser: null,
@@ -36,6 +38,7 @@ const authSlice = createSlice({
             .addCase(registerUser.rejected, (state, action)=>{
                 state.infoUser = null
                 state.isError = action.payload
+                
             })
           
         

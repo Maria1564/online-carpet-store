@@ -17,3 +17,8 @@
 .register button  {
     margin-top: 40px;
 }
+
+.error {
+    color: #f14f3f;
+    font-weight: bold;
+}

@@ -7,31 +7,45 @@ import s from "./Register.module.css"
 
 const Register = () => {
     const dispatch = useDispatch()
-    console.log(useSelector(state=> state.auth.isError))
-    console.log(useSelector(state=> state.auth.isAuth))
+    const {infoUser, isError} = useSelector(state => state.auth)
+    
     const handlerSubmit = async(e) => {
         e.preventDefault()
+        const form = new FormData(e.target)
+        const userName = form.get('fullname')
+        const email = form.get('email')
+        const password = form.get('password')
 
-        await dispatch(registerUser());
+        const user = {
+            fullName: userName,
+            email,
+            password
+        }
+
+        await dispatch(registerUser(user));
     }
 
     const inputFllName= {
         type: "text",
         minLength:"3",
         placeholder: 'fullname',
+        name: 'fullname',
     }
 
     const inputEmail= {
         type: "email",
         placeholder: 'email',
+        name: 'email',
+
     }
 
     const inputPassword= {
         type: "password",
         minLength: "5",
         placeholder: 'password',
+        name: 'password',
     }
-    if(useSelector(state=> state.auth.isAuth)){
+    if(infoUser){
         return<Navigate to="/login" />
     }
 
@@ -42,8 +56,9 @@ const Register = () => {
             <Input attributes={inputFllName}/>
             <Input attributes={inputEmail}/>
             <Input attributes={inputPassword}/>
-            {/* <Button text="Зарегистрироаться" type='submit'/> */}
-            <button type='submit'>Зарегаться</button>
+            {isError && <span className={s.error}>Не удалось зарегестрироватся. Попробуйте ввести другой email</span>}
+            {/* <span className={s.error}>Не удалось зарегестрироватся. Попробуйте ввести другой email</span> */}
+            <Button text="Подтвердить" type='submit'/>
         </form>
     </div>
   )

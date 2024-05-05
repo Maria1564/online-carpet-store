@@ -5,6 +5,8 @@
     padding: 15px 44px;
     transition: var(--transition);
     cursor: pointer;
+    font-size: 20px;
+    color: var(--color-text-light);
 }
 
 .btn:hover{
