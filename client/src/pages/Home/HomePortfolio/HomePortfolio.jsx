@@ -1,7 +1,6 @@
 import React,  { useEffect, useState } from "react";
 import s from "./HomePortfolio.module.css";
 import Card from "./Card/Card";
-import { cards } from "../../../helpers/data";
 import axios from '../../../axios'
 
 

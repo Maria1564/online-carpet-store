@@ -11,7 +11,6 @@ export const registerUser = createAsyncThunk("auth/registerUser", async(params,{
         return res.data
 
     } catch (err) {
-        console.log(err.message)
         return rejectWithValue("Не удалось зарегестрироватся. Попробуйте ввести другой email")
     }
 })
@@ -26,13 +25,21 @@ export const loginUser = createAsyncThunk("auth/loginUser", async(params, {rejec
         return data
 
     } catch (err) {
-        console.log(err.message)
         return rejectWithValue("Неверный логин или пароль")
     }
 })
 
 //Авторизация
+export const fetchData = createAsyncThunk("auth/fetchData", async( _, {rejectWithValue})=>{
+    try {
+        const {data} = await axios.get("/auth/me")
 
+        return data
+
+    } catch (err) {
+        return rejectWithValue("Вы не авторизованы")
+    }
+})
 
 
 const initialState = {
@@ -44,6 +51,12 @@ const initialState = {
 const authSlice = createSlice({
     name: "auth",
     initialState,
+    reducers: {
+        logout: (state)=>{
+            state.isAuth = false
+            state.infoUser =  null
+        }
+    },
     extraReducers: (builder) => {
         console.log("builder>> ",builder)
         builder
@@ -71,8 +84,21 @@ const authSlice = createSlice({
                 state.infoUser = null
                 state.isError = action.payload
             })
+
+            .addCase(fetchData.pending, (state)=>{
+                state.infoUser = null
+                state.isError = null
+            })
+            .addCase(fetchData.fulfilled, (state, action)=>{
+                state.infoUser = action.payload
+                state.isAuth = true
+            })
+            .addCase(fetchData.rejected,  (state,action)=>{
+                state.isAuth = false
+            })
     }
 })
 
 export default authSlice.reducer
+export const {logout} = authSlice.actions
 

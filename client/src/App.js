@@ -7,13 +7,20 @@ import Navbar from "./layouts/Navbar/Navbar";
 import { Routes, Route } from "react-router-dom";
 import Register from "./pages/Authorization/Register/Register";
 import Login from "./pages/Authorization/Login/Login";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { fetchData } from "./redux/slices/auth";
+
 
 function App() {
-
+  const dispatch = useDispatch()
+  useEffect(()=>{
+    dispatch(fetchData())
+  }, [])
 
   return (
     <div className="App">
-      <Navbar />
+      <Navbar isAuth={useSelector(state=>state.auth.isAuth)}/>
 
       <main>
         <Routes>
