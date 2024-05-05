@@ -14,14 +14,10 @@
     border: 2px solid #748594;
     box-shadow: 3px 1px 6px 0px rgb(105 122 134);
     user-select:none;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start; 
 }
 
 .img_product {
-    max-height: 280px;
-    max-width: 243px;
+    max-height: 275px;
     border-radius: 10px;
     object-fit: cover;
     display: block;
@@ -52,8 +48,7 @@
     justify-content: space-around;
     align-items: center;
     gap: 25px;
-    margin-top: auto;
-    width: max-content;
+  
 }
 
 .btn_catalog {
