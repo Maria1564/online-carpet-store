@@ -21,7 +21,7 @@ const HomePortfolio = () => {
         <div className="wrapper">
           <h2 className="section_title">Портфолио</h2>
           <div className={s.cards}>
-                {topProducts?.map(({id, imagepath, nameproduct})=>console.log(topProducts) ||(
+                {topProducts?.map(({id, imagepath, nameproduct})=>(
                     <Card key={id} src={imagepath} alt={nameproduct}/>
                 ))}
             </div>

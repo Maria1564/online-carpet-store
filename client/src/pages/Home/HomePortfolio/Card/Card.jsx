@@ -3,7 +3,6 @@ import s from "./Card.module.css"
 import { REACT_APP_SERVER_URL } from '../../../../config'
 
 const Card = ({src, alt}) => {
-  console.log(src)
   return (
     <div className={s.card}>
         <div className={s.card_img}>

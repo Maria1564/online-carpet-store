@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "../../axios";
 
+
+//регистрация 
 export const registerUser = createAsyncThunk("auth/registerUser", async(params,{rejectWithValue})=>{
     try {
         console.log("params >> ", params)
@@ -13,6 +15,23 @@ export const registerUser = createAsyncThunk("auth/registerUser", async(params,{
         return rejectWithValue("Не удалось зарегестрироватся. Попробуйте ввести другой email")
     }
 })
+
+
+//Аутентификация (вход)
+export const loginUser = createAsyncThunk("auth/loginUser", async(params, {rejectWithValue})=>{
+    try {
+        
+        const {data} = await axios.post("/auth/login", params)
+
+        return data
+
+    } catch (err) {
+        console.log(err.message)
+        return rejectWithValue("Неверный логин или пароль")
+    }
+})
+
+//Авторизация
 
 
 
@@ -38,10 +57,20 @@ const authSlice = createSlice({
             .addCase(registerUser.rejected, (state, action)=>{
                 state.infoUser = null
                 state.isError = action.payload
-                
             })
-          
-        
+            
+            .addCase(loginUser.pending, (state)=>{
+                state.infoUser = null
+                state.isError = null
+            })
+            .addCase(loginUser.fulfilled,  (state, action)=>{
+                state.infoUser = action.payload
+                state.isAuth = true
+            })
+            .addCase(loginUser.rejected, (state, action)=>{
+                state.infoUser = null
+                state.isError = action.payload
+            })
     }
 })
 
