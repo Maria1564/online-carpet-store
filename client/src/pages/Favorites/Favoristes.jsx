@@ -7,20 +7,24 @@ import axios from '../../axios'
 import { REACT_APP_SERVER_URL } from "../../config";
 import { Button } from "../../components/ui";
 import { FaHeart } from "react-icons/fa";
+import { useDispatch, useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
+import { removeFavorite, getFavorites } from "../../redux/slices/favorite";
 
 const Favoristes = () => {
-    const [favorites, setFavorites] = useState([])  //{id: 12, idproduct: 5, imagepath: "/uploads/Ghost.png", nameproduct: "Ghost"}
     const [sizes, setSizes] = useState([])
 
+    const dispatch = useDispatch()
+    
+
+    
+    const  {favoriteProducts: favorites} =  useSelector(state => state.favorites)
     useEffect(()=>{
-        axios.get("/favorites")
-        .then(({data})=>{
-            setFavorites(data)
-            if(data.length){
-                axios.get("/sizes").then(({data})=>setSizes(data))
-              }
-        })
+      dispatch(getFavorites())
+      axios.get("/sizes").then(({data})=>setSizes(data))
     }, [])
+    
+    
 
   return (
     <>
@@ -28,7 +32,7 @@ const Favoristes = () => {
     <section>
         <div className="container">
           <div className={s.cards}>
-            {(!favorites.length ? <h2>Loading...</h2> : favorites.map(item => (
+            {(favorites.length == 0 ? <h2 >Пусто</h2> : favorites.map(item => (
                  <div className={`${s.card} ${style.card_favorite}`} key={item.id}>
                  <img src={`${REACT_APP_SERVER_URL}${item.imagepath}`} alt={item.nameproduct} className={s.img_product} />
                    <span className={s.name}>{item.nameproduct}</span>

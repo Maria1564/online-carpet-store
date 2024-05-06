@@ -41,7 +41,7 @@ const addFavorite = async(req, res)=>{
 //удаление товара из избранных 
 const removeOne = async(req, res)=>{
     try{
-        const infoDeletedFavorite = await db.query("DELETE  FROM Favorites WHERE id = $1 RETURNING id", [req.body.idFavorite])
+        const infoDeletedFavorite = await db.query("DELETE  FROM Favorites WHERE id = $1 RETURNING id", [req.params.id])
         
         if(!infoDeletedFavorite.rows.length){
             return res.status(400).json({

@@ -62,7 +62,7 @@ app.delete("/cart/clear", checkAuth, cartController.removeAll)
 //Избранное (запросы)
 app.get("/favorites", checkAuth, favoriteController.getAll)
 app.post("/favorites", checkAuth, favoriteController.addFavorite)
-app.delete("/favorites", checkAuth, favoriteController.removeOne)
+app.delete("/favorites/:id", checkAuth, favoriteController.removeOne)
 
 //Заказы (запрос)
 app.post("/orders", orderController.create)

@@ -96,7 +96,6 @@ const authSlice = createSlice({
             })
             .addCase(fetchData.rejected,  (state,action)=>{
                 state.isAuth = false
-                state.isError = action.payload
             })
     }
 })

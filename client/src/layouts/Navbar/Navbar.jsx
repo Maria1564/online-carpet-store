@@ -25,9 +25,9 @@ const Navbar = ({isAuth}) => {
           <li><NavLink to="/" className={setActive} >Главная</NavLink></li>
           <li><NavLink to="/aboutUs" className={setActive}>О нас</NavLink></li>
           <li><NavLink to="/catalog" className={setActive}>Каталог</NavLink></li>
-          <li><NavLink to="/favorites" className={setActive}>Избранное</NavLink></li>
           {/* <li><NavLink to="/reviews" className={setActive}>Отзывы</NavLink></li> */}
-          {isAuth ?  
+          {isAuth ?  <>
+          <li><NavLink to="/favorites" className={setActive}>Избранное</NavLink></li>
           <div className={s.auth}>
             <li>
               <Link className={s.auth_link} to="/cart">Корзина</Link>
@@ -36,6 +36,7 @@ const Navbar = ({isAuth}) => {
               <Link className={s.auth_link} to="/login"  onClick={handlerLogout}>Выход</Link>
             </li>
           </div>
+          </>
            : 
           
            <div className={s.auth}>
