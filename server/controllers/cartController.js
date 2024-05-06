@@ -41,7 +41,7 @@ const getAll = async(req, res)=>{
             })
         }
         
-        const cartData = await db.query(`SELECT Cart.id, idUser, imagePath, nameProduct, Sizes.name , quantity
+        const cartData = await db.query(`SELECT Cart.id, idUser, imagePath, nameProduct, Sizes.name , quantity, price
         FROM  Cart, Products, Sizes, Users WHERE idUser = $1 and
         Cart.idUser = Users.id and   Cart.idProduct = Products.id and Cart.idSize = Sizes.id`, [req.body.idUser])
 

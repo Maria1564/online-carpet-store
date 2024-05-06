@@ -1,0 +1,28 @@
+.card_favorite{
+    position: relative;
+}
+
+.heart{
+    position: absolute;
+    padding: 15px;
+    padding-bottom: 13px;
+    background-color: var(--color-dark-primary);
+    border-radius: 50%;
+    bottom: 235px;
+    right: 29px;
+    border: 1px solid #748594;
+}
+
+.icon_heart{
+    fill: red;
+    width: 42px;
+    height: 42px;
+    cursor: pointer;
+    transition: all .6s;
+    
+}
+
+.icon_heart:hover{
+    fill: var(--color-text-light);
+    transform: scale(.87);
+}

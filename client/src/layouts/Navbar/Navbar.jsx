@@ -25,6 +25,7 @@ const Navbar = ({isAuth}) => {
           <li><NavLink to="/" className={setActive} >Главная</NavLink></li>
           <li><NavLink to="/aboutUs" className={setActive}>О нас</NavLink></li>
           <li><NavLink to="/catalog" className={setActive}>Каталог</NavLink></li>
+          <li><NavLink to="/favorites" className={setActive}>Избранное</NavLink></li>
           {/* <li><NavLink to="/reviews" className={setActive}>Отзывы</NavLink></li> */}
           {isAuth ?  
           <div className={s.auth}>

@@ -1,9 +1,9 @@
 
 .cards {
-    margin: 10px 80px;
+    margin: 10px ;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 35px 40px;
+    gap: 35px 12px;
 }
 
 .card {
@@ -62,4 +62,35 @@
 .icon_heart:hover {
     transform: scale(1.2);
     fill: red;
+}
+
+.sizes {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.size {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    border: 1px solid  var(--color-text-light);
+    border-radius: 8px;
+    cursor: pointer;
+    padding: 10px;
+    transition: transform .5s;
+}
+
+.size_name{
+    font-size: 16px;
+}
+
+.price {
+    font-size: 14px;
+}
+
+.size:hover{
+    transform: scale(0.9);
 }

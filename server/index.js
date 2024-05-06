@@ -10,6 +10,7 @@ const UserController = require("./controllers/userController.js")
 const cartController = require("./controllers/cartController.js")
 const favoriteController = require("./controllers/favoriteCollection.js")
 const orderController = require("./controllers/orderController.js")
+const sizeController = require("./controllers/sizeController.js")
 
 const {registerValidation, loginValidation} = require("./middleware/validationAuth.js")
 const checkAuth = require("./middleware/checkAuth.js")
@@ -65,6 +66,9 @@ app.delete("/favorites", checkAuth, favoriteController.removeOne)
 
 //Заказы (запрос)
 app.post("/orders", orderController.create)
+
+//Размеры товара (запрос)
+app.get("/sizes", sizeController.getSizes)
 
 //Создание сервера
 app.listen(PORT, (err)=>{

@@ -11,6 +11,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { fetchData } from "./redux/slices/auth";
 import Catalog from "./pages/Catalog/Catalog";
+import Favoristes from "./pages/Favorites/Favoristes";
 
 
 function App() {
@@ -28,6 +29,8 @@ function App() {
           <Route path="/" element={<Home />}></Route>
           <Route path="/aboutUs" element={<AboutUs />}></Route>
           <Route path="/catalog"element={<Catalog/>}></Route>
+          <Route path="/favorites"element={<Favoristes/>}></Route>
+
           {/* <Route path="/portfolio" element={<Portfolio />}></Route> */}
           {/* <Route path="/reviews" element={<Reviews />}></Route> */}
 
