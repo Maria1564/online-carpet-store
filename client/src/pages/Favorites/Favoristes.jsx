@@ -8,23 +8,24 @@ import { REACT_APP_SERVER_URL } from "../../config";
 import { Button } from "../../components/ui";
 import { FaHeart } from "react-icons/fa";
 import { useDispatch, useSelector } from 'react-redux';
-import { Navigate } from 'react-router-dom';
 import { removeFavorite, getFavorites } from "../../redux/slices/favorite";
 
 const Favoristes = () => {
-    const [sizes, setSizes] = useState([])
+  const [sizes, setSizes] = useState([])
 
-    const dispatch = useDispatch()
+  const dispatch = useDispatch()
+  
+  const  {favoriteProducts: favorites} =  useSelector(state => state.favorites)
+  useEffect(()=>{
+    dispatch(getFavorites())
+    axios.get("/sizes").then(({data})=>setSizes(data))
+  }, [])
     
-
-    
-    const  {favoriteProducts: favorites} =  useSelector(state => state.favorites)
-    useEffect(()=>{
-      dispatch(getFavorites())
-      axios.get("/sizes").then(({data})=>setSizes(data))
-    }, [])
-    
-    
+  const removeHeart = (e)=> {
+    let currentCard = e.target.closest(`.${s.card}`)
+    const idFavorite = currentCard.getAttribute("id")
+    dispatch(removeFavorite({id: idFavorite}))
+  }  
 
   return (
     <>
@@ -33,7 +34,7 @@ const Favoristes = () => {
         <div className="container">
           <div className={s.cards}>
             {(favorites.length == 0 ? <h2 >Пусто</h2> : favorites.map(item => (
-                 <div className={`${s.card} ${style.card_favorite}`} key={item.id}>
+                 <div className={`${s.card} ${style.card_favorite}`} key={item.id} id={item.id} >
                  <img src={`${REACT_APP_SERVER_URL}${item.imagepath}`} alt={item.nameproduct} className={s.img_product} />
                    <span className={s.name}>{item.nameproduct}</span>
                    <div className={s.sizes}>
@@ -46,7 +47,7 @@ const Favoristes = () => {
                    </div>
                    <div className={s.btns}>
                      <Button text="Добавить" className={s.btn_catalog}/>
-                     <div className={style.heart}>
+                     <div className={style.heart} onClick={removeHeart}>
                         <FaHeart className={style.icon_heart}  />
                      </div>
                  </div>

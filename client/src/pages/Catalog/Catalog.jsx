@@ -39,10 +39,10 @@ const Catalog = () => {
         idProduct
       }))
     }
+
     const removeHeart = (e)=>{
       let currentCard = e.target.closest(`.${s.card}`)
       const idProduct = currentCard.getAttribute("id")
-      console.log(favorites)
       const currentFavorite = favorites.filter(item => item.idproduct === Number(idProduct))
       dispatch(removeFavorite({
         id: currentFavorite[0].id
