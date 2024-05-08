@@ -12,6 +12,7 @@ import { useEffect } from "react";
 import { fetchData } from "./redux/slices/auth";
 import Catalog from "./pages/Catalog/Catalog";
 import Favoristes from "./pages/Favorites/Favoristes";
+import Cart from "./pages/Cart/Cart";
 
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
           <Route path="/aboutUs" element={<AboutUs />}></Route>
           <Route path="/catalog"element={<Catalog/>}></Route>
           <Route path="/favorites"element={<Favoristes/>}></Route>
+          <Route path="/cart"element={<Cart/>}></Route>
 
           {/* <Route path="/portfolio" element={<Portfolio />}></Route> */}
           {/* <Route path="/reviews" element={<Reviews />}></Route> */}
