@@ -10,7 +10,7 @@ import Card from './Card/Card';
 
 const Cart = () => {
     const dispatch = useDispatch()
-    const {products, status} = useSelector(state => state.cart)
+    const {products} = useSelector(state => state.cart)
 
     useEffect(()=>{
         dispatch(getAllCart())
