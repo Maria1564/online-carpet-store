@@ -39,6 +39,20 @@ export const plusOne = createAsyncThunk("cart/plusOne", async({idCart, quantity}
     }    
 })  
 
+//Уменьшение товара на 1
+export const minusOne = createAsyncThunk("cart/minusOne", async({idCart, quantity}, {rejectWithValue, dispatch})=>{
+    try {
+       
+        const {data} = await axios.patch("/cart", {idCart, quantity:quantity-=1})
+      
+        dispatch(plusOrMinus(data)) 
+        
+    } catch (err) {
+        console.log(err.message)
+        return rejectWithValue("Не получилось увеличить/уменьшить товар на 1")
+    }    
+})  
+
 const initialState = {
     products: [],
     status: "loading",
@@ -63,7 +77,6 @@ const cartSlice = createSlice({
                 }
                 return  item
             })
-            console.log(state.products[action.payload.idCart])
             
         }
     },
@@ -104,6 +117,20 @@ const cartSlice = createSlice({
                 state.status = "loaded"
             })
             .addCase(plusOne.rejected, (state, action)=>{
+                state.isError = action.payload
+                state.status = "loaded"
+            })
+
+
+            
+            .addCase(minusOne.pending, (state)=>{
+                state.isError  = null
+                state.status = "loading"
+            })
+            .addCase(minusOne.fulfilled, (state)=>{
+                state.status = "loaded"
+            })
+            .addCase(minusOne.rejected, (state, action)=>{
                 state.isError = action.payload
                 state.status = "loaded"
             })
