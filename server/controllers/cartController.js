@@ -16,7 +16,7 @@ const addProduct = async(req, res)=>{
         const aboutProduct = await db.query("SELECT imagePath, nameProduct  FROM Products WHERE id = $1", [cartData.rows[0].idproduct])
         const sizeProduct  = await db.query("SELECT name, price FROM Sizes WHERE id = $1", [cartData.rows[0].idsize])
 
-        const {idproduct, idsize, quantity, ...cartInfo} = cartData.rows[0]
+        const {quantity, ...cartInfo} = cartData.rows[0]
         res.json({
             ...cartInfo,
             ...aboutProduct.rows[0],
@@ -43,7 +43,7 @@ const getAll = async(req, res)=>{
         //     })
         // }
         
-        const cartData = await db.query(`SELECT Cart.id, idUser, imagePath, nameProduct, Sizes.name , quantity, price
+        const cartData = await db.query(`SELECT Cart.id, idUser, idProduct, idSize, imagePath, nameProduct, Sizes.name , quantity, price
         FROM  Cart, Products, Sizes, Users WHERE idUser = $1 and
         Cart.idUser = Users.id and   Cart.idProduct = Products.id and Cart.idSize = Sizes.id`, [req.id])
 

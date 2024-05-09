@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import Wrapper from "../../layouts/Wrapper/Wrapper";
 
-import s from "../Catalog/Catalog.module.css";
+// import s from "../Catalog/Catalog.module.css";
+import s from "../Catalog/Card/Card.module.css";
 import style from "./Favorites.module.css"
 import axios from '../../axios'
 import { REACT_APP_SERVER_URL } from "../../config";
@@ -32,7 +33,7 @@ const Favoristes = () => {
     <Wrapper text="Избранное" />
     <section>
         <div className="container">
-          <div className={s.cards}>
+          <div className={style.cards}>
             {(favorites.length == 0 ? <h2 >Пусто</h2> : favorites.map(item => (
                  <div className={`${s.card} ${style.card_favorite}`} key={item.id} id={item.id} >
                  <img src={`${REACT_APP_SERVER_URL}${item.imagepath}`} alt={item.nameproduct} className={s.img_product} />

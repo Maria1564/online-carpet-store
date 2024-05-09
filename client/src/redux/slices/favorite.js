@@ -58,6 +58,7 @@ const favoriteSlice = createSlice({
         builder
             .addCase(getFavorites.pending, (state)=>{
                 state.isError = null
+                state.favoriteProducts = []
             })
             .addCase(getFavorites.fulfilled, (state, action)=>{
                 state.favoriteProducts = action.payload
