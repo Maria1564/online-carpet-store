@@ -17,6 +17,11 @@ const Catalog = () => {
 
     const favorites = useSelector(state => state.favorites.favoriteProducts);
     const cartProducts = useSelector(state => state.cart.products);
+    const cartError = useSelector(state => state.cart.isError);
+
+    if(cartError){
+      alert(cartError)
+    }
     
     useEffect(() => {
       axios.get("/products").then(({ data }) => {
@@ -30,7 +35,7 @@ const Catalog = () => {
   useEffect(() => {
       dispatch(getFavorites());
       dispatch(getAllCart());
-  }, []);
+  }, [dispatch]);
   
   return (
     <>
@@ -38,7 +43,7 @@ const Catalog = () => {
       <section>
         <div className="container">
           <div className={s.cards}>
-            {(!products.length ? <h2>Loading...</h2> : products.map(item => <Card key={item.id} item={item} sizes={sizes} favorites={favorites}/>))}
+            {(!products.length ? <h2>Loading...</h2> : products.map(item => <Card key={item.id} item={item} sizes={sizes} favorites={favorites} cartProducts={cartProducts}/>))}
           </div>
         </div>
       </section>

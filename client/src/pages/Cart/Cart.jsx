@@ -25,7 +25,6 @@ const Cart = () => {
 
     
 
-    console.log(products)
     return (
         <>
             <Wrapper text="Корзина"/>
@@ -57,15 +56,17 @@ const Cart = () => {
                                     </div>
                                 )))}
                             </div>
+                            {products.length && status === "loaded" ?
                             <div className={s.list_footer}>
-                                    <Link className={s.exit} to="/catalog"> <IoIosArrowBack className={s.icon_arrow}/> Продолжить покупки</Link>
-                                    <div className={s.box}>
-                                        <span className={s.box_price}>Все товары:&nbsp;&nbsp;&nbsp;&nbsp;{sumCart()} руб</span>
-                                        <span className={s.box_price}>Доставка:&nbsp;&nbsp;&nbsp;&nbsp;беслпатно</span>
-                                        <hr />
-                                        <span className={s.sum}>Итого:&nbsp;&nbsp;&nbsp;&nbsp;{sumCart()} руб</span>
-                                    </div>
-                            </div>
+                                <Link className={s.exit} to="/catalog"> <IoIosArrowBack className={s.icon_arrow}/> Продолжить покупки</Link>
+                                <div className={s.box}>
+                                    <span className={s.box_price}>Все товары:&nbsp;&nbsp;&nbsp;&nbsp;{sumCart()} руб</span>
+                                    <span className={s.box_price}>Доставка:&nbsp;&nbsp;&nbsp;&nbsp;беслпатно</span>
+                                    <hr />
+                                    <span className={s.sum}>Итого:&nbsp;&nbsp;&nbsp;&nbsp;{sumCart()} руб</span>
+                                </div>
+                            </div>: <></>}
+                            
                         </div>
                         <div className={s.payment_card} >Карта для оплаты</div>
                     </div>

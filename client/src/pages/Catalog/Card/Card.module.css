@@ -52,6 +52,10 @@
     transform: none;
 }
 
+.btn_catalog:active{
+    transform: scale(0.8);
+}
+
 .icon_heart:hover {
     transform: scale(1.2);
 }
@@ -81,7 +85,6 @@
 
 .size_select > .size_name,
 .size_select >.price {
-    font-weight: 700;
     color: var(--color-green);
 }
 

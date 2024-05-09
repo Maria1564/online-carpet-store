@@ -13,6 +13,32 @@ export const getAllCart = createAsyncThunk("cart/getAllCart", async(_, {rejectWi
     }
 })
 
+//Добвление в корзину
+export const addInCart= createAsyncThunk("cart/addInCart", async(params, {rejectWithValue, dispatch})=>{
+    try{    
+        const {data} = await axios.post("/cart", params)
+        console.log(data)
+        dispatch(addProductCart(data))
+    }catch(err){
+        console.log(err.message)
+        return rejectWithValue("Не получилось добавить в корзину")
+    }
+})
+
+//Увелечение товара на 1
+export const plusOne = createAsyncThunk("cart/plusOne", async({idCart, quantity}, {rejectWithValue, dispatch})=>{
+    try {
+       
+        const {data} = await axios.patch("/cart", {idCart, quantity:quantity+=1})
+      
+        dispatch(plusOrMinus(data)) 
+        
+    } catch (err) {
+        console.log(err.message)
+        return rejectWithValue("Не получилось увеличить/уменьшить товар на 1")
+    }    
+})  
+
 const initialState = {
     products: [],
     status: "loading",
@@ -23,7 +49,23 @@ const cartSlice = createSlice({
     name: "cart",
     initialState,
     reducers: {
-
+        addProductCart: (state, action)=>{
+            state.products.push(action.payload)
+        },
+        plusOrMinus: (state, action)=>{
+            state.products = state.products.map((item)=>{
+                if(item.id === action.payload.idCart){
+                    return {
+                        ...item,
+                        quantity: action.payload.quantity
+                    }
+                
+                }
+                return  item
+            })
+            console.log(state.products[action.payload.idCart])
+            
+        }
     },
     extraReducers: (builder)=>{
         builder
@@ -41,7 +83,32 @@ const cartSlice = createSlice({
                 state.isError = action.payload
                 state.status = "loaded"
             })
+
+            .addCase(addInCart.pending, (state)=>{
+                state.isError  = null
+                state.status = "loading"
+            })
+            .addCase(addInCart.fulfilled, (state)=>{
+                state.status = "loaded"
+            })
+            .addCase(addInCart.rejected, (state, action)=>{
+                state.isError = action.payload
+                state.status = "loaded"
+            })
+
+            .addCase(plusOne.pending, (state)=>{
+                state.isError  = null
+                state.status = "loading"
+            })
+            .addCase(plusOne.fulfilled, (state)=>{
+                state.status = "loaded"
+            })
+            .addCase(plusOne.rejected, (state, action)=>{
+                state.isError = action.payload
+                state.status = "loaded"
+            })
     }
 })
 
 export default cartSlice.reducer
+export const {addProductCart, plusOrMinus} =  cartSlice.actions

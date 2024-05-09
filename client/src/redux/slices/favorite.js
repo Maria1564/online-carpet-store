@@ -14,7 +14,6 @@ export const getFavorites = createAsyncThunk("favorites/getFavorites", async(_, 
 
 export const addFavorite =createAsyncThunk("favorites/addFavorite", async(params, {rejectWithValue, dispatch})=>{
     try {   
-        console.log(params)
         const {data} = await axios.post("/favorites", params)
 
         dispatch(addInFavorites(data))
