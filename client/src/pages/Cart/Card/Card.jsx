@@ -2,18 +2,27 @@ import React from 'react'
 import s from "./Card.module.css"
 import { RxCross2 } from "react-icons/rx";
 import { REACT_APP_SERVER_URL } from "../../../config";
-import {plusOne, minusOne} from "../../../redux/slices/cart"
+import {plusOne, minusOne, removeOne} from "../../../redux/slices/cart"
 import { useDispatch } from 'react-redux';
 
 
 const Card = ({item}) => {
     const dispatch = useDispatch()
+
     const handlerMinus = (idCart, quantity)=>{
         dispatch(minusOne({ idCart, quantity }))
     }
 
     const handlerPlus = (idCart, quantity)=>{
         dispatch(plusOne({ idCart, quantity }))
+    }
+
+    const removeOneProduct = (idCart)=>{
+        if(window.confirm("Уверены, что хотите убрать товар из корзины?")){
+            console.log(idCart)
+            dispatch(removeOne({idCart}))
+        }
+
     }
 
   return (
@@ -34,7 +43,7 @@ const Card = ({item}) => {
             onClick={()=> handlerPlus(item.id, item.quantity)}>+</button>
         </div>
         <span className={s.price_product}>{item.price} руб</span>
-        <div className={s.close}>
+        <div className={s.close} onClick={()=>removeOneProduct(item.id)}>
             <RxCross2 className={s.icon_cross} />
         </div>
     </div>

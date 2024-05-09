@@ -53,6 +53,30 @@ export const minusOne = createAsyncThunk("cart/minusOne", async({idCart, quantit
     }    
 })  
 
+//Удаление одного товара 
+export const removeOne = createAsyncThunk("cart/removeOne", async({idCart}, {rejectWithValue, dispatch})=>{
+    try {
+        console.log(idCart)
+        const {data} = await axios.delete(`/cart/${idCart}`)
+
+        dispatch(deleteOneProduct(data))
+        
+    } catch (err) {
+        return rejectWithValue("Не получилось удалить из корзины товар")
+    }
+})
+
+//Очистка корзины
+export const removeAll = createAsyncThunk("cart/removeAll", async(_, {rejectWithValue, dispatch})=>{
+    try {
+        const {data} =  await axios.delete("/cart/clear")
+        return data
+        
+    } catch (err) {
+        return rejectWithValue("Не получилось очистить корзину")
+    }
+})
+
 const initialState = {
     products: [],
     status: "loading",
@@ -78,7 +102,10 @@ const cartSlice = createSlice({
                 return  item
             })
             
-        }
+        },
+        deleteOneProduct: (state, action)=>{
+            state.products = state.products.filter(({id})=> id !== action.payload.idCart)
+        },
     },
     extraReducers: (builder)=>{
         builder
@@ -120,8 +147,6 @@ const cartSlice = createSlice({
                 state.isError = action.payload
                 state.status = "loaded"
             })
-
-
             
             .addCase(minusOne.pending, (state)=>{
                 state.isError  = null
@@ -134,8 +159,33 @@ const cartSlice = createSlice({
                 state.isError = action.payload
                 state.status = "loaded"
             })
+
+            .addCase(removeOne.pending, (state)=>{
+                state.isError  = null
+                state.status = "loading"
+            })
+            .addCase(removeOne.fulfilled, (state)=>{
+                state.status = "loaded"
+            })
+            .addCase(removeOne.rejected, (state, action)=>{
+                state.isError = action.payload
+                state.status = "loaded"
+            })
+
+            .addCase(removeAll.pending, (state)=>{
+                state.isError  = null
+                state.status = "loading"
+            })
+            .addCase(removeAll.fulfilled, (state, action)=>{
+                state.status = "loaded"
+                state.products = action.payload.cart
+            })
+            .addCase(removeAll.rejected, (state, action)=>{
+                state.isError = action.payload
+                state.status = "loaded"
+            })
     }
 })
 
 export default cartSlice.reducer
-export const {addProductCart, plusOrMinus} =  cartSlice.actions
+export const {addProductCart, plusOrMinus, deleteOneProduct} =  cartSlice.actions

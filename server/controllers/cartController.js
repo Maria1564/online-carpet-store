@@ -94,9 +94,9 @@ const remove = async(req, res)=>{
         //         message: "Не получилось убрать товар из корзины"
         //     })
         // }
-        
-        const cartData = await db.query(`DELETE  FROM Cart WHERE id = $1 RETURNING *`, [req.body.idCart] )
-        console.log(cartData)
+            console.log(req.params)
+        const cartData = await db.query(`DELETE  FROM Cart WHERE id = $1 RETURNING *`, [req.params.id] )
+        // console.log(cartData)
         if(!cartData.rows.length){
             return res.status(400).json({
                 message: "Нет данного товара"
