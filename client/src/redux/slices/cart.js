@@ -67,12 +67,13 @@ export const removeOne = createAsyncThunk("cart/removeOne", async({idCart}, {rej
 })
 
 //Очистка корзины
-export const removeAll = createAsyncThunk("cart/removeAll", async(_, {rejectWithValue, dispatch})=>{
+export const removeAll = createAsyncThunk("cart/removeAll", async(_, {rejectWithValue})=>{
     try {
-        const {data} =  await axios.delete("/cart/clear")
+        const {data} =  await axios.delete("/cart")
         return data
         
     } catch (err) {
+        console.log(err.message)
         return rejectWithValue("Не получилось очистить корзину")
     }
 })

@@ -1,14 +1,19 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {Button, Input} from "../../../components/ui/index.js"
 import { Navigate } from 'react-router-dom'
 import {useSelector, useDispatch} from "react-redux"
-import {registerUser} from "../../../redux/slices/auth.js"
+import {registerUser, clearError} from "../../../redux/slices/auth.js"
 import s from "./Register.module.css"
 
 const Register = () => {
     const dispatch = useDispatch()
     const {infoUser, isError} = useSelector(state => state.auth)
     
+    // Очистка ошибки при создании компонента
+    useEffect(() => {
+        dispatch(clearError());
+    }, [dispatch]);
+
     const handlerSubmit = async(e) => {
         e.preventDefault()
         const form = new FormData(e.target)
@@ -56,7 +61,9 @@ const Register = () => {
             <Input attributes={inputFllName}/>
             <Input attributes={inputEmail}/>
             <Input attributes={inputPassword}/>
-            {isError && <span className={s.error}>Не удалось зарегестрироватся. Попробуйте ввести другой email</span>}
+            <div className={s.wrapper_error}>
+                    {isError && <span className={s.error}>{isError}</span>}
+            </div>
             {/* <span className={s.error}>Не удалось зарегестрироватся. Попробуйте ввести другой email</span> */}
             <Button text="Подтвердить" type='submit'/>
         </form>

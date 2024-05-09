@@ -57,7 +57,7 @@ app.get("/cart", checkAuth, cartController.getAll)
 app.post("/cart", checkAuth, cartController.addProduct)
 app.patch("/cart", checkAuth, cartController.plusOrMinusProduct)
 app.delete("/cart/:id", checkAuth, cartController.remove)
-app.delete("/cart/clear", checkAuth, cartController.removeAll)
+app.delete("/cart", checkAuth, cartController.removeAll)
 
 //Избранное (запросы)
 app.get("/favorites", checkAuth, favoriteController.getAll)

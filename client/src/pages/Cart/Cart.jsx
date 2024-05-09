@@ -5,12 +5,8 @@ import Wrapper from "../../layouts/Wrapper/Wrapper";
 import { Link} from 'react-router-dom';
 import { IoIosArrowBack } from "react-icons/io";
 import {useDispatch, useSelector} from "react-redux"
-import {getAllCart} from "../../redux/slices/cart"
+import {getAllCart,removeAll} from "../../redux/slices/cart"
 import Card from './Card/Card';
-
-
-
-
 
 const Cart = () => {
     const dispatch = useDispatch()
@@ -21,6 +17,13 @@ const Cart = () => {
     }, [dispatch])
 
     
+    //очистка корзины
+    const clearCart = ()=>{
+        if(window.confirm("Вы точно хотите полностью очистить корзину?")){
+            dispatch(removeAll())
+        }
+    }
+
 
     //итоговая сумма корзины
     const sumCart = () => products.reduce((currentSum, {price, quantity})=> currentSum + (price * quantity), 0)
@@ -33,13 +36,13 @@ const Cart = () => {
                     <div className={s.cart_wrapper}>
                         <div className={s.list}>
                             <div className={s.products}>
-                                {!products.length ? <span>Пусто</span>: products.map((item)=>(
+                                {!products.length ? <h2>Пусто</h2>: products.map((item)=>(
                                   <Card item={item} key={item.id}/>
                                 ))}
-                            {(products.length && status === "loaded") ? <button className={s.btn_clear}>Очистить корзину</button> : <></>}
+                            {products.length ? <button className={s.btn_clear} onClick={clearCart}>Очистить корзину</button> : <></>}
                             </div>
 
-                            {products.length && status === "loaded" ?
+                            {products.length ?
                             <div className={s.list_footer}>
                                 <Link className={s.exit} to="/catalog"> <IoIosArrowBack className={s.icon_arrow}/> Продолжить покупки</Link>
                                 <div className={s.box}>

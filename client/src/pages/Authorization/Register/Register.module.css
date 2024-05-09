@@ -18,6 +18,11 @@
     margin-top: 40px;
 }
 
+
+.wrapper_error {
+    height: 20px;
+
+}
 .error {
     color: #f14f3f;
     font-weight: bold;
