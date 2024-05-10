@@ -122,11 +122,17 @@ button {
     color: var(--color-text-light);
 }
 
-button:hover{
+button:not(:disabled):hover{
     background: var(--color-dark-primary);
     border: 2px solid var(--color-text-light);
     transform: scale(1.2);
 }
+
+button:disabled {
+    background-color: var(--color-grey);
+}
+
+
 
 @media screen and (max-width: 1344px){
     .container {

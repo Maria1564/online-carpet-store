@@ -7,10 +7,12 @@ import { IoIosArrowBack } from "react-icons/io";
 import {useDispatch, useSelector} from "react-redux"
 import {getAllCart,removeAll} from "../../redux/slices/cart"
 import Card from './Card/Card';
+import CreditCardForm from './CreditCardForm/CreditCardForm';
 
 const Cart = () => {
     const dispatch = useDispatch()
     const {products} = useSelector(state => state.cart)
+    const user = useSelector(state => state.auth.infoUser)
 
     useEffect(()=>{
         dispatch(getAllCart())
@@ -53,7 +55,9 @@ const Cart = () => {
                                 </div>
                             </div>: <></>}
                         </div>
-                        <div className={s.payment_card} >Карта для оплаты</div>
+                        <div className={s.payment_card} >
+                            <CreditCardForm userName={user?.fullname} haveProducts={products.length}/>
+                        </div>
                     </div>
                 </div>
             </section>

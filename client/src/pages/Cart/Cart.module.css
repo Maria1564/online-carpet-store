@@ -1,14 +1,14 @@
+
 .cart_wrapper {
     display: flex;
     flex-wrap: wrap;
-    gap: 50px;
+    gap: 60px;
     justify-content: space-between;
     align-items: flex-start;
 }
 
 .payment_card {
-    border: 1px solid red;
-    width: 600px;
+    padding: 10px;
 }
 .list_footer {
     display: flex;

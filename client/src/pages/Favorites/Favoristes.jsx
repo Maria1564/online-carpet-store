@@ -31,7 +31,7 @@ const Favoristes = () => {
     <section>
         <div className="container">
           <div className={style.cards}>
-            {(favorites.length == 0 ? <h2 >Пусто</h2> : favorites.map(item => (
+            {(favorites.length === 0 ? <h2 >Пусто</h2> : favorites.map(item => (
                 <Card key={item.id} item={item} sizes={sizes} cartProducts={cartProducts}/>
             )))}
           </div>

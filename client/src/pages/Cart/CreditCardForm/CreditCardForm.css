@@ -1,0 +1,52 @@
+.rccs__card--unknown > div {
+    background: linear-gradient(44deg, #102b3ebf, #1bc89f96); 
+    box-shadow: -3px 4px 7px 0px rgb(78 96 109);
+}
+
+
+
+
+.credit_card_form {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-top: 50px;
+}
+.credit_card_form input {
+    border: none;
+    border-bottom: 2px solid var(--color-green);
+    background: inherit;
+    font-family: inherit;
+    font-size: 18px;
+    padding: 15px 5px;
+    color: var(--color-text-light);
+    text-align: center;
+}
+
+.credit_card_form input::placeholder{
+    color: var(--color-grey);
+    font-size: 14px;
+}
+
+.credit_card_form input:focus {
+    outline: none;
+    border-color: var(--color-text-light);
+}
+
+.credit_card_form > .form_group {
+    display: flex;
+    gap: 20px;
+}
+
+.form_group > input{
+    max-width: 220px;
+}
+
+.form-actions {
+    margin-top: 40px;
+}
+
+.form_actions > .btn {
+    margin: 0 auto;
+    display: block;
+}
