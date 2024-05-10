@@ -3,10 +3,10 @@ const db = require("../db.js")
 //создание заказа
 const create = async(req, res)=>{
     try {
-        const {idUser, total} = req.body
+        const {total} = req.body
         const currentDate = new Date().toLocaleDateString().split(".").reverse().join("-");
             
-        const newOrder = await db.query("INSERT INTO Orders (idUser, total, orderDate) VALUES ($1, $2, $3) returning * ", [idUser, total, currentDate])
+        const newOrder = await db.query("INSERT INTO Orders (idUser, total, orderDate) VALUES ($1, $2, $3) returning * ", [req.id, total, currentDate])
 
         res.json({...newOrder.rows[0], orderdate:newOrder.rows[0].orderdate.toLocaleDateString().split(".").reverse().join("-")})
         

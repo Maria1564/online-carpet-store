@@ -5,48 +5,58 @@ import 'react-credit-cards-2/dist/es/styles-compiled.css';
 import  "./CreditCardForm.css"
 import {useDispatch} from "react-redux"
 import {removeAll} from "../../../redux/slices/cart"
+import {getCurrentOrder} from "../../../redux/slices/order"
 
 
-const CreditCardForm = ({user, haveProducts}) => {
+const CreditCardForm = ({user, haveProducts, sumCart}) => {
   const dispatch = useDispatch()
-
-  //Отправка сообщени на почту
+  
+  //Отправка сообщения на почту
   const sendEmail = (e) => {
     e.preventDefault();
-      const formUser = {
-        user_name: user.fullname,
-        user_email: user.email,
-        message: `Информация о заказе 4:
-                  Заказ на сумму 22000руб успешно принят
-                  Сокро к нему приступим)`,
+    const total = sumCart()
+
+    dispatch(getCurrentOrder({total}))
+    .then(({payload})=> {
+      if(typeof payload === "string"){
+        alert(payload)
+        return
+      }else{        
+        const formUser = {
+          user_name: user.fullname,
+          user_email: user.email,
+          message: `Информация о заказе ${payload.id}:
+                    Заказ на сумму ${total} руб успешно принят
+                    Сокро к нему приступим)`,
+        }
+  
+
+        const form = document.createElement('form');
+        form.innerHTML = `
+          <input type="hidden" name="user_name" value="${formUser.user_name}" />
+          <input type="hidden" name="user_email" value="${formUser.user_email}" />
+          <input type="hidden" name="message" value="${formUser.message}" />
+        `
+  
+        emailjs
+          .sendForm('service_56mkc9p', 'template_suf3xte', form, {
+            publicKey: 'eovax4d5K02_r9mIB',
+          })
+          .then(
+            () => {
+              console.log('SUCCESS!');
+              alert("Заказ успешно оплачен. Сообщение о заказе придёт к вам на почту")
+              setState(prev => ({...prev, number: '', expiry: '', cvc: '', name: ``, focus: ''}))
+              dispatch(removeAll())
+              
+            },
+            (error) => {
+              console.log('FAILED...', error);
+              alert("К сожаление не удалось создать заказ")
+            },
+          );
       }
-
-      const form = document.createElement('form');
-  form.innerHTML = `
-    <input type="hidden" name="user_name" value="${formUser.user_name}" />
-    <input type="hidden" name="user_email" value="${formUser.user_email}" />
-    <input type="hidden" name="message" value="${formUser.message}" />
-  `
-
-    emailjs
-      .sendForm('service_56mkc9p', 'template_suf3xte', form, {
-        publicKey: 'eovax4d5K02_r9mIB',
-      })
-      .then(
-        () => {
-          console.log('SUCCESS!');
-          alert("Заказ успешно оплачен. Сообщение о заказе придёт к вам на почту")
-          setState(prev => ({...prev, number: '', expiry: '', cvc: '', name: ``, focus: ''}))
-          dispatch(removeAll())
-          
-        },
-        (error) => {
-          console.log('FAILED...', error);
-          alert("К сожаление не удалось создать заказ")
-        },
-      );
-
-
+    })
    
   };
 

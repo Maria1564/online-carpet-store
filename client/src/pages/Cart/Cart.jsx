@@ -1,4 +1,4 @@
-import React, { useEffect} from 'react'
+import React, { useEffect, useState} from 'react'
 import s from "./Cart.module.css"
 
 import Wrapper from "../../layouts/Wrapper/Wrapper";
@@ -13,7 +13,6 @@ const Cart = () => {
     const dispatch = useDispatch()
     const {products} = useSelector(state => state.cart)
     const user = useSelector(state => state.auth.infoUser)
-
     useEffect(()=>{
         dispatch(getAllCart())
     }, [dispatch])
@@ -56,7 +55,7 @@ const Cart = () => {
                             </div>: <></>}
                         </div>
                         <div className={s.payment_card} >
-                            <CreditCardForm user={user} haveProducts={products.length}/>
+                            <CreditCardForm user={user} haveProducts={products.length} sumCart={sumCart}/>
                         </div>
                     </div>
                 </div>
