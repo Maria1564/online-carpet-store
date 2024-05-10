@@ -56,7 +56,7 @@ const Cart = () => {
                             </div>: <></>}
                         </div>
                         <div className={s.payment_card} >
-                            <CreditCardForm userName={user?.fullname} haveProducts={products.length}/>
+                            <CreditCardForm user={user} haveProducts={products.length}/>
                         </div>
                     </div>
                 </div>

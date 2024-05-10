@@ -1,33 +1,76 @@
 import React, {useState} from 'react'
 import Cards from 'react-credit-cards-2';
+import emailjs from '@emailjs/browser';
 import 'react-credit-cards-2/dist/es/styles-compiled.css';
 import  "./CreditCardForm.css"
+import {useDispatch} from "react-redux"
+import {removeAll} from "../../../redux/slices/cart"
 
-const CreditCardForm = ({userName, haveProducts}) => {
-    //состояние карты (полей карты и фокус на поле)
-    const [state, setState] = useState({
-        number: '',
-        expiry: '',
-        cvc: '',
-        name: `${userName}`,
-        focus: '',
-    })
 
-    const handleInputChange = (evt) => {
-        const { name, value } = evt.target;
-        
-        setState((prev) => ({ ...prev, [name]: value }));
+const CreditCardForm = ({user, haveProducts}) => {
+  const dispatch = useDispatch()
+
+  //Отправка сообщени на почту
+  const sendEmail = (e) => {
+    e.preventDefault();
+      const formUser = {
+        user_name: user.fullname,
+        user_email: user.email,
+        message: `Информация о заказе 4:
+                  Заказ на сумму 22000руб успешно принят
+                  Сокро к нему приступим)`,
       }
-    
-      const handleInputFocus = (evt) => {
-        setState((prev) => ({ ...prev, focus: evt.target.name }));
-    }
+
+      const form = document.createElement('form');
+  form.innerHTML = `
+    <input type="hidden" name="user_name" value="${formUser.user_name}" />
+    <input type="hidden" name="user_email" value="${formUser.user_email}" />
+    <input type="hidden" name="message" value="${formUser.message}" />
+  `
+
+    emailjs
+      .sendForm('service_56mkc9p', 'template_suf3xte', form, {
+        publicKey: 'eovax4d5K02_r9mIB',
+      })
+      .then(
+        () => {
+          console.log('SUCCESS!');
+          alert("Заказ успешно оплачен. Сообщение о заказе придёт к вам на почту")
+          setState(prev => ({...prev, number: '', expiry: '', cvc: '', name: ``, focus: ''}))
+          dispatch(removeAll())
+          
+        },
+        (error) => {
+          console.log('FAILED...', error);
+          alert("К сожаление не удалось создать заказ")
+        },
+      );
 
 
-    const createOrder = (e)=>{
-        e.preventDefault()
-        console.log("Прив");
+   
+  };
+
+  //состояние карты (полей карты и фокус на поле)
+  const [state, setState] = useState({
+      number: '',
+      expiry: '',
+      cvc: '',
+      name: ``,
+      focus: '',
+  })
+
+  const handleInputChange = (evt) => {
+      const { name, value } = evt.target;
+      
+      setState((prev) => ({ ...prev, [name]: value }));
     }
+  
+    const handleInputFocus = (evt) => {
+      setState((prev) => ({ ...prev, focus: evt.target.name }));
+  }
+
+
+
 
   return (
     <>
@@ -39,7 +82,7 @@ const CreditCardForm = ({userName, haveProducts}) => {
         focused={state.focus}
         />
 
-        <form className="credit_card_form" onSubmit={(e)=> createOrder(e)}>
+        <form className="credit_card_form" onSubmit={(e)=> sendEmail(e)}>
             <input
                 type="tel"
                 name="number"
