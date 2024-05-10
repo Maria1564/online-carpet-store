@@ -4,7 +4,6 @@ import 'react-credit-cards-2/dist/es/styles-compiled.css';
 import  "./CreditCardForm.css"
 
 const CreditCardForm = ({userName, haveProducts}) => {
-    console.log(userName)
     //состояние карты (полей карты и фокус на поле)
     const [state, setState] = useState({
         number: '',

@@ -49,7 +49,7 @@
 }
 
 .btn_catalog:hover{ 
-    transform: none;
+    transform: none !important;
 }
 
 .btn_catalog:active{

@@ -19,7 +19,6 @@ const Card = ({item}) => {
 
     const removeOneProduct = (idCart)=>{
         if(window.confirm("Уверены, что хотите убрать товар из корзины?")){
-            console.log(idCart)
             dispatch(removeOne({idCart}))
         }
 
