@@ -8,15 +8,18 @@ import {useDispatch, useSelector} from "react-redux"
 import {getAllCart,removeAll} from "../../redux/slices/cart"
 import Card from './Card/Card';
 import CreditCardForm from './CreditCardForm/CreditCardForm';
+import Modal from './Modal/Modal';
 
 const Cart = () => {
     const dispatch = useDispatch()
     const {products} = useSelector(state => state.cart)
     const user = useSelector(state => state.auth.infoUser)
+
+    const [isOpen, setIsOpen] = useState(false)
     useEffect(()=>{
         dispatch(getAllCart())
     }, [dispatch])
-
+    
     
     //очистка корзины
     const clearCart = ()=>{
@@ -55,11 +58,13 @@ const Cart = () => {
                             </div>: <></>}
                         </div>
                         <div className={s.payment_card} >
-                            <CreditCardForm user={user} haveProducts={products.length} sumCart={sumCart}/>
+                            <CreditCardForm user={user} haveProducts={products.length} sumCart={sumCart} setIsOpen={setIsOpen}/>
                         </div>
                     </div>
                 </div>
             </section>
+
+            {isOpen && <Modal setIsOpen={setIsOpen}/>}
         </>
     )
 }

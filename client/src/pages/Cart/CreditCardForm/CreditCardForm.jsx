@@ -8,7 +8,7 @@ import {removeAll} from "../../../redux/slices/cart"
 import {getCurrentOrder} from "../../../redux/slices/order"
 
 
-const CreditCardForm = ({user, haveProducts, sumCart}) => {
+const CreditCardForm = ({user, haveProducts, sumCart, setIsOpen}) => {
   const dispatch = useDispatch()
   
   //Отправка сообщения на почту
@@ -45,6 +45,9 @@ const CreditCardForm = ({user, haveProducts, sumCart}) => {
           .then(
             () => {
               console.log('SUCCESS!');
+              setIsOpen(true)
+              document.body.classList.add('modal-open');
+              
               alert("Заказ успешно оплачен. Сообщение о заказе придёт к вам на почту")
               setState(prev => ({...prev, number: '', expiry: '', cvc: '', name: ``, focus: ''}))
               dispatch(removeAll())
