@@ -1,8 +1,38 @@
 
 .cards {
-    margin: 10px ;
+    margin: 10px;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 35px 12px;
+    margin-top: 60px;
 }
 
+.search {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.btn:not(:disabled):hover{
+    transform: none;
+}
+
+.btn {
+    padding: 10px 15px;
+
+}
+
+.inp_query{
+    background: inherit;
+    border: 1px solid  var(--color-green);
+    padding: 10px 8px;
+    border-radius: 5px;
+    color: var(--color-text-light);
+    font-size: 20px;
+    width: 300px;
+}
+
+.inp_query:focus {
+    outline: none;
+    border-color: var(--color-text-light);
+}
