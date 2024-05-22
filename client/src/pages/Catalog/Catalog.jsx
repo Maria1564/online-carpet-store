@@ -17,11 +17,8 @@ const Catalog = () => {
     
     const favorites = useSelector(state => state.favorites.favoriteProducts);
     const cartProducts = useSelector(state => state.cart.products);
-    const cartError = useSelector(state => state.cart.isError);
 
-    if(cartError){
-      alert(cartError)
-    }
+   
     
     useEffect(() => {
       axios.get("/products").then(({ data }) => {
