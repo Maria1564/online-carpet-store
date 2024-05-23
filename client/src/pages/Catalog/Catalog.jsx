@@ -69,7 +69,7 @@ const Catalog = () => {
       <section>
         <div className="container">
           <div className={s.search}>
-            <input type="text" className={s.inp_query} value={searchQuery} onChange={(e)=> setSearchQuery(e.target.value)}  onInput={(e)=>handlerInp(e)}/>
+            <input type="text" className={s.inp_query} value={searchQuery} onChange={(e)=> setSearchQuery(e.target.value)}  onInput={(e)=>handlerInp(e)} placeholder="поиск..."/>
             <button className={s.btn} onClick={onSearchProducts}>Найти</button>
           </div>
           <div className={s.cards}>
