@@ -33,13 +33,13 @@ const Register = () => {
     const inputFllName= {
         type: "text",
         minLength:"3",
-        placeholder: 'fullname',
+        placeholder: 'фио',
         name: 'fullname',
     }
 
     const inputEmail= {
         type: "email",
-        placeholder: 'email',
+        placeholder: 'почта',
         name: 'email',
 
     }
@@ -47,7 +47,7 @@ const Register = () => {
     const inputPassword= {
         type: "password",
         minLength: "5",
-        placeholder: 'password',
+        placeholder: 'пароль',
         name: 'password',
     }
     if(infoUser){

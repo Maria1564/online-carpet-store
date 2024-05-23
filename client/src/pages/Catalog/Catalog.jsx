@@ -39,7 +39,7 @@ const Catalog = () => {
     if(searchQuery.trim() === ""){
       setSearchProducts(null)
     }else{
-      let filteredProducts = products.filter(product=>console.log(product.nameproduct.toLowerCase(), searchQuery.trim().toLowerCase(), product.nameproduct.toLowerCase().includes(searchQuery.trim().toLowerCase()))||product.nameproduct.toLowerCase().includes(searchQuery.trim().toLowerCase()))
+      let filteredProducts = products.filter(product=>product.nameproduct.toLowerCase().includes(searchQuery.trim().toLowerCase()))
       console.log(filteredProducts)
 
       setSearchProducts(filteredProducts)
@@ -47,13 +47,29 @@ const Catalog = () => {
     } 
 
   }
+
+  const handlerInp =  (e)=>{
+    if(e.target.value.trim() === ""){
+      setSearchProducts(null)
+    }else{
+      let filteredProducts = products.filter(product=>product.nameproduct.toLowerCase().includes(e.target.value.trim().toLowerCase()))
+      console.log(filteredProducts)
+
+      setSearchProducts(filteredProducts)
+      
+    } 
+  }
+
+    
+
+
   return (
     <>
       <Wrapper text="Каталог" />
       <section>
         <div className="container">
           <div className={s.search}>
-            <input type="text" className={s.inp_query} value={searchQuery} onChange={(e)=> setSearchQuery(e.target.value)}/>
+            <input type="text" className={s.inp_query} value={searchQuery} onChange={(e)=> setSearchQuery(e.target.value)}  onInput={(e)=>handlerInp(e)}/>
             <button className={s.btn} onClick={onSearchProducts}>Найти</button>
           </div>
           <div className={s.cards}>
