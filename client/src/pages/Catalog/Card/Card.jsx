@@ -13,11 +13,10 @@ const Card = ({item, sizes, favorites, cartProducts}) => {
   const [selectSize, setSelectSize] = useState({})
 
   const isAuth = useSelector(state => state.auth.isAuth)
-  console.log("isAuth >> ", isAuth)
 
   const dispatch = useDispatch()
 
-
+  
   const isFavorite = (id)=>{
     return favorites.some((favorite) =>favorite.idproduct === id)
   }

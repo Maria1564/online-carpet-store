@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react'
 import s from "./Modal.module.css"
+import { ModalWindow } from '../../../components/ui/index'
 
 const Modal = ({setIsOpen}) => {
     const inpRef = useRef()
@@ -20,18 +21,15 @@ const Modal = ({setIsOpen}) => {
 
 
   return (
-    <div className={s.modal}>
-        <div className={s.modal_wrapper}>
-            <h2>Спасибо за покупку!</h2>
+    <ModalWindow>
+         <h2>Спасибо за покупку!</h2>
             <p>Пожалуйста, укажите ваш контактный номер, чтобы мы могли связаться с вами и уточнить детали доставки вашего заказа</p>
             <input ref={inpRef} type = "tel" required placeholder = '8(999)999-99-99' name ='tel'/>
             <div className={s.error}>
             {isError ? <span>Неверно введён номер телефона</span> : <></>}    
             </div>
             <button className={s.btn} onClick={closeModal}>Ок</button>
-            
-        </div>
-    </div>
+    </ModalWindow>
   )
 }
 
