@@ -2,12 +2,10 @@ import React, { useRef, useState } from 'react'
 import s from "./Modal.module.css"
 import { ModalWindow } from '../../../components/ui/index'
 import { useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
 
 const Modal = ({setIsOpen}) => {
     const inpRef = useRef()
     const [isError,setIsError] = useState(false)
-    const dataCart = useSelector(state=> state.cart.products)
 
     const navigate = useNavigate();
 
