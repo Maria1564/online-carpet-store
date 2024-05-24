@@ -6,11 +6,14 @@ import  "./CreditCardForm.css"
 import {useDispatch} from "react-redux"
 import {removeAll} from "../../../redux/slices/cart"
 import {getCurrentOrder} from "../../../redux/slices/order"
+import { ModalWindow } from '../../../components/ui/index';
 
 
 const CreditCardForm = ({user, haveProducts, sumCart, setIsOpen}) => {
   const dispatch = useDispatch()
   
+  const [isOpenModal, setIsOpenModal] = useState(false)
+
   //Отправка сообщения на почту
   const sendEmail = (e) => {
     e.preventDefault();
@@ -44,13 +47,9 @@ const CreditCardForm = ({user, haveProducts, sumCart, setIsOpen}) => {
           })
           .then(
             () => {
-              console.log('SUCCESS!');
-              setIsOpen(true)
+
+              setIsOpenModal(true)
               document.body.classList.add('modal-open');
-              
-              alert("Заказ успешно оплачен. Сообщение о заказе придёт к вам на почту")
-              setState(prev => ({...prev, number: '', expiry: '', cvc: '', name: ``, focus: ''}))
-              dispatch(removeAll())
               
             },
             (error) => {
@@ -82,8 +81,17 @@ const CreditCardForm = ({user, haveProducts, sumCart, setIsOpen}) => {
       setState((prev) => ({ ...prev, focus: evt.target.name }));
   }
 
+  //закрыть модальное окно
+  const closeFirstModal = () => {
+    setIsOpenModal(false)
+    document.body.classList.remove('modal-open')
 
-
+    console.log('SUCCESS!');
+    setIsOpen(true)
+    document.body.classList.add('modal-open');
+    setState(prev => ({...prev, number: '', expiry: '', cvc: '', name: ``, focus: ''}))
+    dispatch(removeAll())
+  }
 
   return (
     <>
@@ -148,7 +156,12 @@ const CreditCardForm = ({user, haveProducts, sumCart, setIsOpen}) => {
             </div>
       </form>
 
-        
+      {isOpenModal && 
+        <ModalWindow>
+            <h2>Заказ успешно оплачен! </h2>
+            <p>Сообщение о заказе придёт к вам на почту))</p>
+            <button onClick={closeFirstModal}>Ок</button>
+        </ModalWindow>}
     </>
   )
 }

@@ -8,7 +8,7 @@ import { removeFavorite } from "../../../redux/slices/favorite";
 import {addInCart, plusOne} from "../../../redux/slices/cart";
 
 
-const Card = ({item, sizes, cartProducts}) => {
+const Card = ({item, sizes, cartProducts, setIsOpenModal}) => {
     //выбранный рамер
     const [selectSize, setSelectSize] = useState({})
 
@@ -33,7 +33,8 @@ const Card = ({item, sizes, cartProducts}) => {
   const addCart = (idProduct) => {
  
     if(!selectSize[idProduct]){
-      alert("Не выбран размер")
+      setIsOpenModal(true)
+      document.body.classList.add('modal-open');
       return
     }
 

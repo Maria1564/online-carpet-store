@@ -81,3 +81,10 @@
     height: 25px;
     font-weight: bold;
 }
+
+.btns_modal {
+    display: flex;
+    align-items:center;
+    justify-content: center;
+    gap: 40px;
+}

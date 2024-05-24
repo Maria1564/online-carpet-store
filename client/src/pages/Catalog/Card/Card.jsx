@@ -1,20 +1,22 @@
 import React, { useState, memo }from 'react'
 import s from "./Card.module.css"
 import { REACT_APP_SERVER_URL } from "../../../config";
-import { useDispatch} from "react-redux";
+import { useDispatch, useSelector} from "react-redux";
 import { addFavorite, removeFavorite} from "../../../redux/slices/favorite";
 import {addInCart, plusOne} from "../../../redux/slices/cart";
 import { FaHeart } from "react-icons/fa";
 
 
-const Card = ({item, sizes, favorites, cartProducts}) => {
+const Card = ({item, sizes, favorites, cartProducts, setIsOpenModal}) => {
 
   //выбранный рамер
   const [selectSize, setSelectSize] = useState({})
 
+  const isAuth = useSelector(state => state.auth.isAuth)
+
   const dispatch = useDispatch()
 
-
+  
   const isFavorite = (id)=>{
     return favorites.some((favorite) =>favorite.idproduct === id)
   }
@@ -41,7 +43,8 @@ const Card = ({item, sizes, favorites, cartProducts}) => {
   //добавление в корзину товара
   const addCart = (idProduct) => {
     if(!selectSize[idProduct]){
-      alert("Не выбран размер")
+      setIsOpenModal(true)
+      document.body.classList.add('modal-open');
       return
     }
 
@@ -86,9 +89,11 @@ const Card = ({item, sizes, favorites, cartProducts}) => {
         </div>
         <div className={s.btns}>
             <button className={s.btn_catalog} onClick={()=> addCart(item.id)}> Добавить</button>
-            {isFavorite(item.id) ? 
+            {isAuth? 
+            isFavorite(item.id) ? 
             <div onClick={removeHeart}><FaHeart className={s.icon_heart} style={{fill: "red"}} /></div> : 
-            <div onClick={addHeart}><FaHeart className={s.icon_heart}  /></div> }
+            <div onClick={addHeart}><FaHeart className={s.icon_heart}  /></div> 
+            : <></>}
         </div>
     </div>
   )

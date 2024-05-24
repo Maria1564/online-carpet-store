@@ -65,9 +65,12 @@ hr {
     margin-bottom: 80px;
 }
 
-
-
-
+.btns_modal {
+    display: flex;
+    align-items:center;
+    justify-content: center;
+    gap: 40px;
+}
 
 .btn_clear{
     padding: 20px 15px;

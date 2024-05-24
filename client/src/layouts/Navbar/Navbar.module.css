@@ -1,6 +1,6 @@
 
 header {
-    padding: 47px 180px 47px 100px;
+    padding: 47px 200px 47px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -35,7 +35,7 @@ a{
     height: 5px;
     border-radius: 20px;
     background: var(--color-green);
-    bottom: -5px;
+    bottom: -10px;
     left: 0;
 }
 
