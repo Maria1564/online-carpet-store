@@ -9,6 +9,7 @@ import {getAllCart,removeAll} from "../../redux/slices/cart"
 import Card from './Card/Card';
 import CreditCardForm from './CreditCardForm/CreditCardForm';
 import Modal from './Modal/Modal';
+import { ModalWindow } from '../../components/ui';
 
 
 const Cart = () => {
@@ -18,7 +19,8 @@ const Cart = () => {
 
     const [isOpen, setIsOpen] = useState(false)
 
-    
+    //статус модалки при нажатии на кнопку "Очистить корзину"
+    const [isOpenModalDelAll, setIsOpenModalDelAll] = useState(false)
 
 
     useEffect(()=>{
@@ -28,11 +30,20 @@ const Cart = () => {
     
     //очистка корзины
     const clearCart = ()=>{
-        if(window.confirm("Вы точно хотите полностью очистить корзину?")){
-            dispatch(removeAll())
-        }
+        dispatch(removeAll())
+        setIsOpenModalDelAll(false)
+        document.body.classList.remove('modal-open')    
     }
 
+    const showModal = () => {
+        setIsOpenModalDelAll(true)
+        document.body.classList.add('modal-open');
+    }
+
+    const btnNoClearCart = () => {
+        setIsOpenModalDelAll(false)
+        document.body.classList.remove('modal-open')
+    }
 
     //итоговая сумма корзины
     const sumCart = () => products.reduce((currentSum, {price, quantity})=> currentSum + (price * quantity), 0)
@@ -48,7 +59,7 @@ const Cart = () => {
                                 {!products.length ? <h2>Пусто</h2>: products.map((item)=>(
                                   <Card item={item} key={item.id}/>
                                 ))}
-                            {products.length ? <button className={s.btn_clear} onClick={clearCart}>Очистить корзину</button> : <></>}
+                            {products.length ? <button className={s.btn_clear} onClick={showModal}>Очистить корзину</button> : <></>}
                             </div>
 
                             {products.length ?
@@ -70,6 +81,14 @@ const Cart = () => {
             </section>
 
             {isOpen && <Modal setIsOpen={setIsOpen}/>}
+            {isOpenModalDelAll && 
+                <ModalWindow>
+                    <h2>Уверены, что хотите очистить корзину полностью?</h2>
+                    <div className={s.btns_modal}>
+                        <button onClick={clearCart}>Да</button>
+                        <button onClick={btnNoClearCart}>Нет</button>
+                    </div>
+                </ModalWindow>}
             
         </>
     )

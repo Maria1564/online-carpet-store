@@ -21,7 +21,6 @@ const Card = ({item}) => {
     }
 
     const removeOneProduct = ()=>{
-        
         setIsOpenModalDel(true)
         document.body.classList.add('modal-open');
     }
