@@ -6,6 +6,7 @@ import {useDispatch, useSelector } from "react-redux";
 import {  getFavorites } from "../../redux/slices/favorite";
 import { getAllCart} from "../../redux/slices/cart";
 import Card from "./Card/Card";
+import { ModalWindow } from "../../components/ui";
 
 const Catalog = () => {
 
@@ -13,6 +14,7 @@ const Catalog = () => {
     const [sizes, setSizes] = useState([])
     const [searchQuery,setSearchQuery] = useState("")
     const [searchProducts, setSearchProducts] = useState(null)
+    const [isOpenModal, setIsOpenModal] = useState(false)
     const dispatch = useDispatch()
     
     const favorites = useSelector(state => state.favorites.favoriteProducts);
@@ -61,7 +63,10 @@ const Catalog = () => {
   }
 
     
-
+  const closeModal = ()=>{
+    setIsOpenModal(false)
+    document.body.classList.remove('modal-open');
+  } 
 
   return (
     <>
@@ -73,9 +78,16 @@ const Catalog = () => {
             <button className={s.btn} onClick={onSearchProducts}>Найти</button>
           </div>
           <div className={s.cards}>
-            {(Array.isArray(searchProducts) ? searchProducts : products).map(item => <Card key={item.id} item={item} sizes={sizes} favorites={favorites} cartProducts={cartProducts}/>)}
+            {(Array.isArray(searchProducts) ? searchProducts : products).map(item => 
+            <Card key={item.id} item={item} sizes={sizes} favorites={favorites} cartProducts={cartProducts} setIsOpenModal={setIsOpenModal}/>
+            )}
           </div>
         </div>
+        {isOpenModal && 
+          <ModalWindow>
+              <h2>Не выбран размер коврика</h2>
+              <button className={s.btn} onClick={closeModal}>Ок</button>
+          </ModalWindow>}
       </section>
     </>
   );

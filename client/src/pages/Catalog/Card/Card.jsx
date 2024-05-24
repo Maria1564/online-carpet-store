@@ -7,7 +7,7 @@ import {addInCart, plusOne} from "../../../redux/slices/cart";
 import { FaHeart } from "react-icons/fa";
 
 
-const Card = ({item, sizes, favorites, cartProducts}) => {
+const Card = ({item, sizes, favorites, cartProducts, setIsOpenModal}) => {
 
   //выбранный рамер
   const [selectSize, setSelectSize] = useState({})
@@ -43,7 +43,8 @@ const Card = ({item, sizes, favorites, cartProducts}) => {
   //добавление в корзину товара
   const addCart = (idProduct) => {
     if(!selectSize[idProduct]){
-      alert("Не выбран размер")
+      setIsOpenModal(true)
+      document.body.classList.add('modal-open');
       return
     }
 

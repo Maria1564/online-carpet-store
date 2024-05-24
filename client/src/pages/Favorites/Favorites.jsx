@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import Wrapper from "../../layouts/Wrapper/Wrapper";
 
-// import s from "../Catalog/Catalog.module.css";
+import s from "../Catalog/Catalog.module.css";
 import style from "./Favorites.module.css"
 import axios from '../../axios'
 
 import { useDispatch, useSelector } from 'react-redux';
 import {getFavorites } from "../../redux/slices/favorite";
 import Card from './Card/Card';
+import { ModalWindow } from "../../components/ui";
+
 
 const Favoristes = () => {
   const [sizes, setSizes] = useState([])
+  const [isOpenModal, setIsOpenModal] = useState(false)
+
 
   const dispatch = useDispatch()
   
@@ -23,7 +27,12 @@ const Favoristes = () => {
 
     dispatch(getFavorites())
   }, [dispatch])
-    
+   
+  
+  const closeModal = ()=>{
+    setIsOpenModal(false)
+    document.body.classList.remove('modal-open');
+  } 
 
   return (
     <>
@@ -32,10 +41,15 @@ const Favoristes = () => {
         <div className="container">
           <div className={style.cards}>
             {(favorites.length === 0 ? <h2 >Пусто</h2> : favorites.map(item => (
-                <Card key={item.id} item={item} sizes={sizes} cartProducts={cartProducts}/>
+                <Card key={item.id} item={item} sizes={sizes} cartProducts={cartProducts} setIsOpenModal={setIsOpenModal}/>
             )))}
           </div>
         </div>
+        {isOpenModal && 
+          <ModalWindow>
+              <h2>Не выбран размер коврика</h2>
+              <button className={s.btn} onClick={closeModal}>Ок</button>
+          </ModalWindow>}
       </section>
     </>
   )

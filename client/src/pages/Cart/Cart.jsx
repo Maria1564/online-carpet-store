@@ -10,12 +10,17 @@ import Card from './Card/Card';
 import CreditCardForm from './CreditCardForm/CreditCardForm';
 import Modal from './Modal/Modal';
 
+
 const Cart = () => {
     const dispatch = useDispatch()
     const {products} = useSelector(state => state.cart)
     const user = useSelector(state => state.auth.infoUser)
 
     const [isOpen, setIsOpen] = useState(false)
+
+    
+
+
     useEffect(()=>{
         dispatch(getAllCart())
     }, [dispatch])
@@ -65,6 +70,7 @@ const Cart = () => {
             </section>
 
             {isOpen && <Modal setIsOpen={setIsOpen}/>}
+            
         </>
     )
 }

@@ -23,12 +23,12 @@ const Modal = ({setIsOpen}) => {
   return (
     <ModalWindow>
          <h2>Спасибо за покупку!</h2>
-            <p>Пожалуйста, укажите ваш контактный номер, чтобы мы могли связаться с вами и уточнить детали доставки вашего заказа</p>
-            <input ref={inpRef} type = "tel" required placeholder = '8(999)999-99-99' name ='tel'/>
-            <div className={s.error}>
-            {isError ? <span>Неверно введён номер телефона</span> : <></>}    
-            </div>
-            <button className={s.btn} onClick={closeModal}>Ок</button>
+          <p>Пожалуйста, укажите ваш контактный номер, чтобы мы могли связаться с вами и уточнить детали доставки вашего заказа</p>
+          <input ref={inpRef} type = "tel" required placeholder = '8(999)999-99-99' name ='tel'/>
+          <div className={s.error}>
+          {isError ? <span>Неверно введён номер телефона</span> : <></>}    
+          </div>
+          <button className={s.btn} onClick={closeModal}>Ок</button>
     </ModalWindow>
   )
 }
