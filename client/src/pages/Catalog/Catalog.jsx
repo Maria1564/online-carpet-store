@@ -15,6 +15,9 @@ const Catalog = () => {
     const [searchQuery,setSearchQuery] = useState("")
     const [searchProducts, setSearchProducts] = useState(null)
     const [isOpenModal, setIsOpenModal] = useState(false)
+    
+    const [limitProducts,setLimitProducts] = useState([])
+    
     const dispatch = useDispatch()
     
     const favorites = useSelector(state => state.favorites.favoriteProducts);
@@ -28,6 +31,7 @@ const Catalog = () => {
           if (data.length) {
               axios.get("/sizes").then(({ data }) => setSizes(data))
           }
+          
       })
   }, []);
   
@@ -37,6 +41,14 @@ const Catalog = () => {
   }, [dispatch]);
   
 
+  useEffect(()=>{
+    setLimitProducts(prev=>{
+      return[...products.slice(limitProducts.length, limitProducts.length+4 )]
+    } )
+  }, [products])
+
+
+  
   const onSearchProducts= ()=>{
     if(searchQuery.trim() === ""){
       setSearchProducts(null)
@@ -54,9 +66,7 @@ const Catalog = () => {
     if(e.target.value.trim() === ""){
       setSearchProducts(null)
     }else{
-      let filteredProducts = products.filter(product=>product.nameproduct.toLowerCase().includes(e.target.value.trim().toLowerCase()))
-      console.log(filteredProducts)
-
+      let filteredProducts = products.filter(product=>product.nameproduct.toLowerCase().includes(e.target.value.trim().toLowerCase()))  
       setSearchProducts(filteredProducts)
       
     } 
@@ -78,10 +88,16 @@ const Catalog = () => {
             <button className={s.btn} onClick={onSearchProducts}>Найти</button>
           </div>
           <div className={s.cards}>
-            {(Array.isArray(searchProducts) ? searchProducts : products).map(item => 
+            {(Array.isArray(searchProducts) ? searchProducts : limitProducts).map(item => 
             <Card key={item.id} item={item} sizes={sizes} favorites={favorites} cartProducts={cartProducts} setIsOpenModal={setIsOpenModal}/>
             )}
           </div>
+       
+         {(searchProducts === null && limitProducts.length !== products.length) && 
+         <button className={`btn ${s.btn_again}`}  
+            onClick={()=>setLimitProducts(prev=>[...prev, ...products.slice(limitProducts.length, limitProducts.length+4)])}>
+            Показать ещё
+          </button>} 
         </div>
         {isOpenModal && 
           <ModalWindow>
