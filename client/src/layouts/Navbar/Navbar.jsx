@@ -1,12 +1,14 @@
 import React from 'react'
 import s from "./Navbar.module.css"
 import { NavLink, Link } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../../redux/slices/auth'
 
 
 const setActive = ({isActive})=>isActive? s.active: ""
 const Navbar = ({isAuth}) => {
+  
+  const emailUser = useSelector(state=> state.auth.infoUser?.email)
 
   console.log(isAuth)
 
@@ -28,6 +30,8 @@ const Navbar = ({isAuth}) => {
           {/* <li><NavLink to="/reviews" className={setActive}>Отзывы</NavLink></li> */}
           {isAuth ?  <>
           <li><NavLink to="/favorites" className={setActive}>Избранное</NavLink></li>
+
+          <span className={s.email}>{emailUser}</span>
           <div className={s.auth}>
             <li>
               <Link className={s.auth_link} to="/cart">Корзина</Link>

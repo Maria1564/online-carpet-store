@@ -58,6 +58,12 @@ a{
     background: #d4d3d381;
 }
 
+.email{
+    margin-left: 40px;
+    color: var(--color-green);
+    font-weight: 700;
+}
+
 @media screen and (max-width: 1035px) {
     header {
         padding: 47px 25px 47px;
