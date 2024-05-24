@@ -1,11 +1,13 @@
 import React, { useRef, useState } from 'react'
 import s from "./Modal.module.css"
 import { ModalWindow } from '../../../components/ui/index'
+import { useNavigate } from 'react-router-dom'
 
 const Modal = ({setIsOpen}) => {
     const inpRef = useRef()
     const [isError,setIsError] = useState(false)
- 
+
+    const navigate = useNavigate();
 
     const closeModal = ()=>{
         const phoneNumberPattern = /^8\(\d{3}\)\d{3}-\d{2}-\d{2}$/; 
@@ -14,6 +16,8 @@ const Modal = ({setIsOpen}) => {
             setIsError(false)
             setIsOpen(false)
             document.body.classList.remove('modal-open');
+          
+            navigate("/catalog"); //при успешном вводе номера и закрытии модального окна
         }else{
             setIsError(true)
         }

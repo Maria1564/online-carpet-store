@@ -13,17 +13,60 @@ const CreditCardForm = ({user, haveProducts, sumCart, setIsOpen}) => {
   const dispatch = useDispatch()
   
   const [isOpenModal, setIsOpenModal] = useState(false)
+  const [isValidCard, setIsValidCard] = useState("")
+
+  //проверка валидации
+  const checkValidation = (dataCreditCard)=> {
+    
+    const number = Number(dataCreditCard.number)
+    if(isNaN(number)){
+      return  "Номер карты невалиден"
+    }
+
+    const name = Number(dataCreditCard.name)
+    if(!isNaN(name)){
+      return  "имя невалидно"
+    }
+
+    const currentYear = String(new Date().getFullYear())
+    const cardYear = dataCreditCard.expiry.slice(-2)
+    const cardMonth = Number(dataCreditCard.expiry.slice(0, 2))
+    if(cardYear < currentYear.slice(-2) || (cardMonth <= 0 || cardMonth > 13)){
+      return "месяц или год невалиден"
+    }
+
+    const cvc = Number(dataCreditCard.cvc)
+    if(isNaN(cvc)){
+      return "код CVC невалиден"
+    }
+
+    setIsValidCard("")
+    return ""
+  }
+
 
   //Отправка сообщения на почту
   const sendEmail = (e) => {
     e.preventDefault();
     const total = sumCart()
+    
+
+    console.log(state)
+    const resultValid = checkValidation(state)
+    if(resultValid !== "") {
+      console.log(resultValid)
+      setIsValidCard(resultValid)
+      return
+    }
+   
+
 
     dispatch(getCurrentOrder({total}))
     .then(({payload})=> {
       if(typeof payload === "string"){
         alert(payload)
         return
+      
       }else{        
         const formUser = {
           user_name: user.fullname,
@@ -150,6 +193,9 @@ const CreditCardForm = ({user, haveProducts, sumCart, setIsOpen}) => {
                 onChange={handleInputChange}
                 onFocus={handleInputFocus}
                 />
+            </div>
+            <div className="credit_card_wrapper_error">
+                    {isValidCard && <span className={"credit_card_error"}>{isValidCard}</span>}
             </div>
             <div className="form_actions">
               <button type='submit' className="btn" disabled = {haveProducts ? false : true}>Оплатить</button>

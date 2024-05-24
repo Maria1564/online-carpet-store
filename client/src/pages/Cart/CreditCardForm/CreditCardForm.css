@@ -4,7 +4,18 @@
 }
 
 
+.credit_card_wrapper_error {
+    height: 20px;
+    margin-top: 30px;
+}
 
+.credit_card_error{
+    color: #f14f3f;
+    font-weight: bold;
+    width: 100%;
+    display: block; 
+    text-align: center;
+}
 
 .credit_card_form {
     display: flex;

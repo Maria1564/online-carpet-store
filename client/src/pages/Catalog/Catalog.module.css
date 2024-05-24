@@ -46,3 +46,14 @@
     border-color: var(--color-text-light);
     background: none
 }
+
+.btn_again {
+    display: block;
+    width: 60%;
+    margin: 0 auto; 
+    margin-top: 50px;
+}
+
+.btn_again:not(:disabled):hover {
+    transform: none;
+}
