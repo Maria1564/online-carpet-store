@@ -69,6 +69,7 @@ app.post("/orders", checkAuth, orderController.create)
 
 //Размеры товара (запрос)
 app.get("/sizes", sizeController.getSizes)
+app.patch("/sizes", checkAuth, sizeController.changePrice)
 
 //Создание сервера
 app.listen(PORT, (err)=>{
