@@ -3,7 +3,7 @@ const db = require("../db.js")
 //полученме размеров
 const getSizes = async(rq, res)=>{
     try {
-        const sizes = await db.query("SELECT * FROM Sizes")
+        const sizes = await db.query("SELECT * FROM Sizes order by id")
 
         res.json(sizes.rows)
     } catch (err) {

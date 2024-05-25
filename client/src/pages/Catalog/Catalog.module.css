@@ -113,3 +113,15 @@
     transform: scale(0.9);
     color: var(--color-green);
 }
+
+input.input_edit {
+    width: 18   0px;
+}
+
+.wrapper_error {
+    height: 20px;
+}
+.error {
+    color: #f14f3f;
+    font-weight: bold;
+}   

@@ -16,6 +16,12 @@ const Catalog = () => {
     const [searchQuery,setSearchQuery] = useState("")
     const [searchProducts, setSearchProducts] = useState(null)
     const [isOpenModal, setIsOpenModal] = useState(false)
+
+    //модалка для редактирования выбранной цены
+    const [isOpenModalEdit, setIsOpenModalEdit] = useState(false)
+    const [newPrice, setNewPrice] = useState({id:null, value: ""})
+    const [isError, setIsError] = useState("")
+
     
     const [limitProducts,setLimitProducts] = useState([])
     
@@ -78,6 +84,36 @@ const Catalog = () => {
     document.body.classList.remove('modal-open');
   } 
 
+  //редактирование цены
+  const changeSelectPrice = async()=> {
+      console.log(newPrice)
+      const {id: idSize, value} = newPrice
+      if(isNaN(Number(value))){
+        return setIsError("Введите валидную цену")
+      }else if (Number(value) < 800){
+        return setIsError("цена не может быть меньше 800 руб.")
+      }else{
+        setIsError("")
+      }
+    const {data} = await axios.patch("/sizes", {idSize, newPrice: value})
+ 
+    setSizes(prev=>{
+      console.log(...prev)
+      return [
+        ...prev.map(elem=> {
+          if (elem.id === data.id){
+            console.log(elem, data)
+           return  {...elem, price: data.price}
+          }
+          return elem
+        }),
+      ]
+    })
+
+    setIsOpenModalEdit(false)
+    document.body.classList.remove('modal-open');   
+  }
+
   return (
     <>
       <Wrapper text="Каталог" />
@@ -97,7 +133,11 @@ const Catalog = () => {
             <div className={s.prices}>
               {sizes?.map(elem=>(
                 <div className={s.box_price} key={elem.id}>
-                  <div className={s.edit}>
+                  <div className={s.edit} onClick={()=> {
+                    setIsOpenModalEdit(true)
+                    setNewPrice(prev=>({...prev, id: elem.id}))
+                    document.body.classList.add('modal-open');
+                  }}>
                     <MdModeEditOutline className={s.icon_pen}/>
                   </div>
                   <span className={s.price}>{elem.price} руб.</span>
@@ -124,6 +164,20 @@ const Catalog = () => {
           <ModalWindow>
               <h2>Не выбран размер коврика</h2>
               <button className={s.btn} onClick={closeModal}>Ок</button>
+          </ModalWindow>}
+
+        {isOpenModalEdit && 
+          <ModalWindow>
+              <h2>Изменить цену</h2>
+
+              <label>
+                Изменть на: <input className={s.input_edit} type="text" required maxLength="5" minLength="3" 
+                placeholder="новоя цена" value={newPrice.newPrice} onInput={(e)=>setNewPrice(prev=>({...prev, value: e.target.value}))}/>
+              </label>
+              <div className={s.wrapper_error}>
+                    {isError && <span className={s.error}>{isError}</span>}
+                </div>
+              <button onClick={changeSelectPrice}>Ок</button>
           </ModalWindow>}
       </section>
     </>
