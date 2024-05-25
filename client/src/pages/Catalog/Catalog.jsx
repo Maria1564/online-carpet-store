@@ -7,6 +7,7 @@ import {  getFavorites } from "../../redux/slices/favorite";
 import { getAllCart} from "../../redux/slices/cart";
 import Card from "./Card/Card";
 import { ModalWindow } from "../../components/ui";
+import { MdModeEditOutline } from "react-icons/md";
 
 const Catalog = () => {
 
@@ -22,8 +23,7 @@ const Catalog = () => {
     
     const favorites = useSelector(state => state.favorites.favoriteProducts);
     const cartProducts = useSelector(state => state.cart.products);
-
-   
+    const isAdmin = useSelector(state=> state.auth.infoUser?.isadmin) 
     
     useEffect(() => {
       axios.get("/products").then(({ data }) => {
@@ -83,10 +83,31 @@ const Catalog = () => {
       <Wrapper text="Каталог" />
       <section>
         <div className="container">
+        <div className={s.top_panel}>
           <div className={s.search}>
             <input type="text" className={s.inp_query} value={searchQuery} onChange={(e)=> setSearchQuery(e.target.value)}  onInput={(e)=>handlerInp(e)} placeholder="поиск..."/>
             <button className={s.btn} onClick={onSearchProducts}>Найти</button>
           </div>
+
+          {isAdmin && <div className={s.settings_price}>
+            <div>
+            <h2>Цены:</h2>
+            <p>(для редактирования)</p>
+            </div>
+            <div className={s.prices}>
+              {sizes?.map(elem=>(
+                <div className={s.box_price} key={elem.id}>
+                  <div className={s.edit}>
+                    <MdModeEditOutline className={s.icon_pen}/>
+                  </div>
+                  <span className={s.price}>{elem.price} руб.</span>
+                  <span className={s.size}>{elem.name}</span>
+                </div>
+              ))}
+            </div>
+          </div>}
+        </div>
+
           <div className={s.cards}>
             {(Array.isArray(searchProducts) ? searchProducts : limitProducts).map(item => 
             <Card key={item.id} item={item} sizes={sizes} favorites={favorites} cartProducts={cartProducts} setIsOpenModal={setIsOpenModal}/>

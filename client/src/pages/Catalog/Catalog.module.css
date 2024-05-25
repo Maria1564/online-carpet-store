@@ -57,3 +57,59 @@
 .btn_again:not(:disabled):hover {
     transform: none;
 }
+
+.top_panel {
+    display: flex;
+    justify-content: space-between;
+    align-items:start;
+    color: var(--color-text-light);
+}
+.settings_price {
+    display: flex;
+    gap: 30px;
+}
+
+.prices{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.box_price {
+    position: relative;
+    padding: 15px;
+    max-width: max-content;
+    border-radius: 9px;
+    border: 2px solid #748594;
+}
+
+.box_price >span {
+    display: block;
+    text-align: center;
+}
+
+.size {
+    font-size: 14px;
+    color: var(--color-grey);
+    font-weight: 400;
+}
+
+.edit {
+    position: absolute;
+    top: -18px;
+    right: -9px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.icon_pen {
+    width: 100%;
+    height: 100%;
+    transition: transform .8s, color .8s;
+}
+
+.edit:hover .icon_pen{
+    transform: scale(0.9);
+    color: var(--color-green);
+}
