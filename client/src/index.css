@@ -56,6 +56,7 @@ span {
     color: var(--color-text-light);
     font-size: 20px;
     font-weight: 500;
+    user-select: none;
 }
 
 h1{
@@ -72,6 +73,7 @@ h1,
 h2, 
 h3{
     word-break: break-word; 
+    user-select: none;
 }
 
 section  {

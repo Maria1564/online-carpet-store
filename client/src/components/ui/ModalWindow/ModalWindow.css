@@ -40,7 +40,7 @@
     max-width: max-content;
 }
 
-.modal_wrapper > input {
+.modal_wrapper  input {
     border: none;
     border-bottom: 2px solid var(--color-green);
     background: inherit;
@@ -52,12 +52,12 @@
     text-align: center;
 }
 
-.modal_wrapper > input::placeholder{
+.modal_wrapper  input::placeholder{
     color: var(--color-grey);
     font-size: 14px;
 }
 
-.modal_wrapper > input:focus {
+.modal_wrapper  input:focus {
     outline: none;
     border-color: var(--color-text-light);
 }
