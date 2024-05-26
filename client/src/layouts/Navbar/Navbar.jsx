@@ -3,7 +3,7 @@ import s from "./Navbar.module.css"
 import { NavLink, Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../../redux/slices/auth'
-
+import Logo from "../../assets/img/logo.png"
 
 const setActive = ({isActive})=>isActive? s.active: ""
 const Navbar = ({isAuth}) => {
@@ -20,7 +20,8 @@ const Navbar = ({isAuth}) => {
   return (
     <header>
       <Link to="/" className={s.logo}>
-        FastTafting
+          <span>FastTafting</span>
+        <img src={Logo} alt="logo" />
       </Link>
       <nav >
         <ul className={s.menu}>
