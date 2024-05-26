@@ -59,6 +59,8 @@ app.patch("/cart", checkAuth, cartController.plusOrMinusProduct)
 app.delete("/cart/:id", checkAuth, cartController.remove)
 app.delete("/cart", checkAuth, cartController.removeAll)
 
+app.post("/cartLocal", checkAuth, cartController.addLocalProduct)
+
 //Избранное (запросы)
 app.get("/favorites", checkAuth, favoriteController.getAll)
 app.post("/favorites", checkAuth, favoriteController.addFavorite)

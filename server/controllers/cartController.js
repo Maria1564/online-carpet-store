@@ -32,6 +32,38 @@ const addProduct = async(req, res)=>{
     }
 }
 
+//добавление локальной из корзины в базу данных
+const addLocalProduct = async(req, res)=>{
+    try{
+        const {idProduct, idSize, currentQuantity} = req.body
+
+        // if(req.id != idUser){    
+        //     return res.status(400).json({
+        //         message: "Не получилось добавить товар в корзину"
+        //     })
+        // }
+
+        const cartData = await  db.query("INSERT INTO Cart (idUser,  idProduct, idSize, quantity) VALUES ($1, $2, $3, $4) RETURNING *", [req.id, idProduct, idSize, currentQuantity])
+        const aboutProduct = await db.query("SELECT imagePath, nameProduct  FROM Products WHERE id = $1", [cartData.rows[0].idproduct])
+        const sizeProduct  = await db.query("SELECT name, price FROM Sizes WHERE id = $1", [cartData.rows[0].idsize])
+
+        const {quantity, ...cartInfo} = cartData.rows[0]
+        res.json({
+            ...cartInfo,
+            ...aboutProduct.rows[0],
+            name: sizeProduct.rows[0].name,
+            quantity,
+            price: sizeProduct.rows[0].price
+        })
+
+    }catch(err){
+        console.log(err.message)
+        res.status(400).json({
+            message: "Не получилось добавить товар в корзину"
+        })
+    }
+}
+
 
 //получене всех товаров
 const getAll = async(req, res)=>{
@@ -135,5 +167,6 @@ module.exports = {
     getAll,
     plusOrMinusProduct,
     remove,
-    removeAll
+    removeAll,
+    addLocalProduct
 }

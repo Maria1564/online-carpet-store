@@ -48,21 +48,49 @@ const Card = ({item, sizes, favorites, cartProducts, setIsOpenModal}) => {
       return
     }
 
-    if(cartProducts.some(({idproduct, idsize})=> idproduct === idProduct && idsize === selectSize[idProduct])) {
-      const {id, quantity} = cartProducts.filter(({idproduct, idsize}) => idproduct === idProduct && idsize === selectSize[idProduct])[0]
-      dispatch(plusOne({
-        idCart: id,
-        quantity
-      }))
-      console.log(id)
+
+    if(isAuth){
+      //Проерка, имеется ли уже такой товар в корзине
+      if(cartProducts.some(({idproduct, idsize})=> idproduct === idProduct && idsize === selectSize[idProduct])) {
+        const {id, quantity} = cartProducts.filter(({idproduct, idsize}) => idproduct === idProduct && idsize === selectSize[idProduct])[0]
+        dispatch(plusOne({
+          idCart: id,
+          quantity
+        }))
+        console.log(id)
+      }else{
+        dispatch(addInCart({
+          idProduct,
+          idSize: selectSize[idProduct]
+        }))
+        
+      }
     }else{
-      dispatch(addInCart({
-        idProduct,
-        idSize: selectSize[idProduct]
-      }))
-      
+
+      console.log("dd")
+        const localCart = JSON.parse(localStorage.getItem("localCart"))
+        let isHaveCartProduct = localCart.some(product=>product.idProduct === idProduct && product.idSize === selectSize[idProduct])
+        if(isHaveCartProduct){
+
+          localStorage?.setItem("localCart", JSON.stringify([...localCart.map(elem=>{
+            if(elem.idProduct === idProduct && elem.idSize === selectSize[idProduct]){
+              return {...elem, currentQuantity: elem.currentQuantity+=1}
+            }
+              return elem
+          })]))
+
+        }else{
+          const idSize = selectSize[idProduct]
+          const newCartProduct ={
+            idProduct, 
+            idSize,
+            currentQuantity:1
+          }
+          localStorage.setItem("localCart", JSON.stringify([...localCart, newCartProduct]))
+        }
     }
-  }
+
+  } 
 
 
   const handlerSelectSize=(idProduct, idSize)=>{
