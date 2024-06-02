@@ -8,6 +8,7 @@ import { getAllCart} from "../../redux/slices/cart";
 import Card from "./Card/Card";
 import { ModalWindow } from "../../components/ui";
 import { MdModeEditOutline } from "react-icons/md";
+import { FaPlus } from "react-icons/fa6";
 
 const Catalog = () => {
 
@@ -98,7 +99,6 @@ const Catalog = () => {
     const {data} = await axios.patch("/sizes", {idSize, newPrice: value})
  
     setSizes(prev=>{
-      console.log(...prev)
       return [
         ...prev.map(elem=> {
           if (elem.id === data.id){
@@ -149,8 +149,17 @@ const Catalog = () => {
         </div>
 
           <div className={s.cards}>
-            {(Array.isArray(searchProducts) ? searchProducts : limitProducts).map(item => 
-            <Card key={item.id} item={item} sizes={sizes} favorites={favorites} cartProducts={cartProducts} setIsOpenModal={setIsOpenModal}/>
+            {(Array.isArray(searchProducts) ? searchProducts : limitProducts).map((item,index) =>  <>
+            <Card key={item.id} item={item} sizes={sizes} favorites={favorites} cartProducts={cartProducts} setIsOpenModal={setIsOpenModal} isAdmin={isAdmin}/>
+
+            
+            {(isAdmin && index+1 === products.length) &&  //возможность добавть новый коврик
+              <div className={s.wrapper_new_product}>
+                <div className={s.add}>
+                  <FaPlus className={s.icon_plus}/>
+                </div>
+              </div>}
+            </>
             )}
           </div>
        

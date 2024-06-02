@@ -7,7 +7,7 @@ import {addInCart, plusOne} from "../../../redux/slices/cart";
 import { FaHeart } from "react-icons/fa";
 
 
-const Card = ({item, sizes, favorites, cartProducts, setIsOpenModal}) => {
+const Card = ({item, sizes, favorites, cartProducts, setIsOpenModal, isAdmin}) => {
 
   //выбранный рамер
   const [selectSize, setSelectSize] = useState({})
@@ -105,8 +105,13 @@ const Card = ({item, sizes, favorites, cartProducts, setIsOpenModal}) => {
 
   return (
     <div className={s.card}   id={item.id}>
+        {/* <img src={`${REACT_APP_SERVER_URL}${item.imagepath}`} alt={item.nameproduct} className={s.img_product} />
+        <span className={s.name}>{item.nameproduct}</span> */}
+        <div className={s.about}>
         <img src={`${REACT_APP_SERVER_URL}${item.imagepath}`} alt={item.nameproduct} className={s.img_product} />
         <span className={s.name}>{item.nameproduct}</span>
+        </div>
+
         <div className={s.sizes}>
         {sizes.length && sizes.map(({id, name, price})=>(
             <div className={`${s.size} ${selectSize[item.id] === id && s.size_select}`} id={id} key={id} onClick={()=>handlerSelectSize(item.id, id)}>
@@ -115,14 +120,16 @@ const Card = ({item, sizes, favorites, cartProducts, setIsOpenModal}) => {
             </div>
         ))}
         </div>
-        <div className={s.btns}>
+
+        {!isAdmin && 
+          <div className={s.btns}>
             <button className={s.btn_catalog} onClick={()=> addCart(item.id)}> Добавить</button>
             {isAuth? 
             isFavorite(item.id) ? 
             <div onClick={removeHeart}><FaHeart className={s.icon_heart} style={{fill: "red"}} /></div> : 
             <div onClick={addHeart}><FaHeart className={s.icon_heart}  /></div> 
             : <></>}
-        </div>
+          </div>}
     </div>
   )
 }

@@ -8,12 +8,16 @@
     user-select:none;
 }
 
+.about {
+    width: max-content;
+    margin: 0 auto;
+}
+
 .img_product {
     max-height: 275px;
     border-radius: 10px;
     object-fit: cover;
     display: block;
-    margin: 0 auto;
 }
 
 .name {

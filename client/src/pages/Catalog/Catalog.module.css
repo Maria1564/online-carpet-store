@@ -125,3 +125,42 @@ input.input_edit {
     color: #f14f3f;
     font-weight: bold;
 }   
+
+.wrapper_new_product {
+    max-width: 100%;
+    padding: 20px;
+    border-radius: 9px;
+    border: 2px solid #748594;
+    box-shadow: 3px 1px 6px 0px rgb(105 122 134);
+}
+
+.add {
+    border-radius: 9px;
+    border: 2px solid #748594;
+    box-shadow: 3px 1px 6px 0px rgb(105 122 134);
+    height: 300px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    transition: background-color .5s,box-shadow .6s;
+}
+
+.add:hover{
+    background-color: #244760b8;
+    box-shadow: 3px 1px 6px 1px rgb(174 185 193);
+}
+
+.icon_plus {
+    width: 100px;
+    height: 100px;
+    color:  #8d96a8;
+    transition: all .5s;
+}
+
+.add:hover .icon_plus {
+    color: var(--color-text-light);
+    width: 112px;
+    height: 112px;
+}
+
