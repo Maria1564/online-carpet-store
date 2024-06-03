@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import s from "./Catalog.module.css";
 import Wrapper from "../../layouts/Wrapper/Wrapper";
 import axios from '../../axios'
@@ -11,6 +11,7 @@ import { MdModeEditOutline } from "react-icons/md";
 import { FaPlus } from "react-icons/fa6";
 
 const Catalog = () => {
+   const inputFileImage = useRef(null)
 
     const [products,setProducts] = useState([])
     const [sizes, setSizes] = useState([])
@@ -50,10 +51,9 @@ const Catalog = () => {
 
   useEffect(()=>{
     setLimitProducts(prev=>{
-      return[...products.slice(limitProducts.length, limitProducts.length+4 )]
+      return[...prev, ...products.slice(limitProducts.length, limitProducts.length+4 )]
     } )
   }, [products])
-
 
   
   const onSearchProducts= ()=>{
@@ -114,6 +114,28 @@ const Catalog = () => {
     document.body.classList.remove('modal-open');   
   }
 
+ 
+  
+  const handlerNewProduct=async()=>{
+    inputFileImage.current.click()
+  }
+
+   //получение изображение и запрос на сервер
+  const handlerImageUpload = async(e)=> {
+    const formData = new FormData()
+    formData.append("image", e.target.files[0])
+    console.log(e.target.files[0])
+     if(!e.target.files[0] || products.some(elem=> elem.nameproduct === e.target.files[0].name.split(".")[0])) return
+    axios.post("/products/upload-image", formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+    .then(res=> res.data)
+    .then(newProduct=> setProducts(prev=> ([...prev, newProduct])))
+  }
+
+
   return (
     <>
       <Wrapper text="Каталог" />
@@ -150,16 +172,19 @@ const Catalog = () => {
         </div>
 
           <div className={s.cards}>
-            {(Array.isArray(searchProducts) ? searchProducts : limitProducts).map((item,index) =>  <React.Fragment key={index}>
-            <Card item={item} sizes={sizes} favorites={favorites} cartProducts={cartProducts} setIsOpenModal={setIsOpenModal} isAdmin={isAdmin}/>
+            {(Array.isArray(searchProducts) ? searchProducts : limitProducts).map((item,index) =>  
+            <React.Fragment key={index}>
+              <Card item={item} sizes={sizes} favorites={favorites} cartProducts={cartProducts} setIsOpenModal={setIsOpenModal} isAdmin={isAdmin}/>
 
-            
-            {(isAdmin && index+1 === products.length) &&  //возможность добавть новый коврик
-              <div className={s.wrapper_new_product}>
-                <div className={s.add}>
-                  <FaPlus className={s.icon_plus}/>
-                </div>
-              </div>}
+              {/* карточка для добавления нового корика */}
+              {(isAdmin && index+1 === products.length) && 
+                <div className={s.wrapper_new_product}>
+                  <div className={s.add} onClick={handlerNewProduct}>
+                    <input type="file" className={s.hidden} accept="image/*" ref={inputFileImage} onChange={(e)=>handlerImageUpload(e)}/>
+
+                    <FaPlus className={s.icon_plus}/>
+                  </div>
+                </div>}
             </React.Fragment>
             )}
           </div>
