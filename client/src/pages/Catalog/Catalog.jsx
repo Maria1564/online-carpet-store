@@ -125,10 +125,11 @@ const Catalog = () => {
             <button className={s.btn} onClick={onSearchProducts}>Найти</button>
           </div>
 
-          {isAdmin && <div className={s.settings_price}>
+          {isAdmin && 
+          <div className={s.settings_price}>
             <div>
-            <h2>Цены:</h2>
-            <p>(для редактирования)</p>
+              <h2>Цены:</h2>
+              <p>(для редактирования)</p>
             </div>
             <div className={s.prices}>
               {sizes?.map(elem=>(
@@ -149,8 +150,8 @@ const Catalog = () => {
         </div>
 
           <div className={s.cards}>
-            {(Array.isArray(searchProducts) ? searchProducts : limitProducts).map((item,index) =>  <>
-            <Card key={item.id} item={item} sizes={sizes} favorites={favorites} cartProducts={cartProducts} setIsOpenModal={setIsOpenModal} isAdmin={isAdmin}/>
+            {(Array.isArray(searchProducts) ? searchProducts : limitProducts).map((item,index) =>  <React.Fragment key={index}>
+            <Card item={item} sizes={sizes} favorites={favorites} cartProducts={cartProducts} setIsOpenModal={setIsOpenModal} isAdmin={isAdmin}/>
 
             
             {(isAdmin && index+1 === products.length) &&  //возможность добавть новый коврик
@@ -159,7 +160,7 @@ const Catalog = () => {
                   <FaPlus className={s.icon_plus}/>
                 </div>
               </div>}
-            </>
+            </React.Fragment>
             )}
           </div>
        

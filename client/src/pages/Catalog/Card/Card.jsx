@@ -67,7 +67,6 @@ const Card = ({item, sizes, favorites, cartProducts, setIsOpenModal, isAdmin}) =
       }
     }else{
 
-      console.log("dd")
         const localCart = JSON.parse(localStorage.getItem("localCart"))
         let isHaveCartProduct = localCart.some(product=>product.idProduct === idProduct && product.idSize === selectSize[idProduct])
         if(isHaveCartProduct){
@@ -105,8 +104,7 @@ const Card = ({item, sizes, favorites, cartProducts, setIsOpenModal, isAdmin}) =
 
   return (
     <div className={s.card}   id={item.id}>
-        {/* <img src={`${REACT_APP_SERVER_URL}${item.imagepath}`} alt={item.nameproduct} className={s.img_product} />
-        <span className={s.name}>{item.nameproduct}</span> */}
+  
         <div className={s.about}>
         <img src={`${REACT_APP_SERVER_URL}${item.imagepath}`} alt={item.nameproduct} className={s.img_product} />
         <span className={s.name}>{item.nameproduct}</span>

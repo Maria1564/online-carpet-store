@@ -16,7 +16,20 @@ const getTopProducts = async(req, res)=>{
     res.json(topProducts.rows)
 }
 
+//добавление нового товара
+const addNewProduct = async(req, res)=>{
+    const {originalname} = req.file
+
+    const data = await db.query("INSERT INTO products (nameproduct, imagepath) VALUES ($1, $2)  RETURNING * ", [originalname.split(".")[0], `/uploads/${originalname}`])
+  
+    res.json({
+        url: `/uploads/${originalname}`,
+        info: data.rows[0]
+    })
+}
+
 module.exports = {
     getAll,
     getTopProducts,
+    addNewProduct,
 }
