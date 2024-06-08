@@ -21,9 +21,15 @@ function App() {
     dispatch(fetchData())
   }, [])
 
+  useEffect(()=>{
+    if(!localStorage.getItem("localCart")){
+      localStorage.setItem("localCart", JSON.stringify([]))
+    }
+  }, [])
+
   return (
     <div className="App">
-      <Navbar isAuth={useSelector(state=>state.auth.isAuth)}/>
+      <Navbar isAuth={useSelector(state=>state.auth.isAuth)} isAdmin = {useSelector(state=>state.auth.infoUser?.isadmin)}/>
 
       <main>
         <Routes>

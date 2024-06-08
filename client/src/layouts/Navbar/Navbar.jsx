@@ -3,11 +3,11 @@ import s from "./Navbar.module.css"
 import { NavLink, Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../../redux/slices/auth'
-
+import Logo from "../../assets/img/logo.png"
 
 const setActive = ({isActive})=>isActive? s.active: ""
-const Navbar = ({isAuth}) => {
-  
+const Navbar = ({isAuth, isAdmin}) => {
+  console.log("Nav",isAdmin )
   const emailUser = useSelector(state=> state.auth.infoUser?.email)
 
   console.log(isAuth)
@@ -20,7 +20,8 @@ const Navbar = ({isAuth}) => {
   return (
     <header>
       <Link to="/" className={s.logo}>
-        FastTafting
+          <span>FastTafting</span>
+        <img src={Logo} alt="logo" />
       </Link>
       <nav >
         <ul className={s.menu}>
@@ -29,13 +30,15 @@ const Navbar = ({isAuth}) => {
           <li><NavLink to="/catalog" className={setActive}>Каталог</NavLink></li>
           {/* <li><NavLink to="/reviews" className={setActive}>Отзывы</NavLink></li> */}
           {isAuth ?  <>
-          <li><NavLink to="/favorites" className={setActive}>Избранное</NavLink></li>
+          {!isAdmin && <li><NavLink to="/favorites" className={setActive}>Избранное</NavLink></li>}
 
           <span className={s.email}>{emailUser}</span>
           <div className={s.auth}>
+            {!isAdmin &&  
             <li>
               <Link className={s.auth_link} to="/cart">Корзина</Link>
             </li>
+            }
             <li>
               <Link className={s.auth_link} to="/login"  onClick={handlerLogout}>Выход</Link>
             </li>

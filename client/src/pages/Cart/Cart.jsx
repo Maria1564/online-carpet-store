@@ -5,11 +5,12 @@ import Wrapper from "../../layouts/Wrapper/Wrapper";
 import { Link} from 'react-router-dom';
 import { IoIosArrowBack } from "react-icons/io";
 import {useDispatch, useSelector} from "react-redux"
-import {getAllCart,removeAll} from "../../redux/slices/cart"
+import {addProductCart, getAllCart,removeAll} from "../../redux/slices/cart"
 import Card from './Card/Card';
 import CreditCardForm from './CreditCardForm/CreditCardForm';
 import Modal from './Modal/Modal';
 import { ModalWindow } from '../../components/ui';
+import axios from '../../axios';
 
 
 const Cart = () => {
@@ -27,6 +28,26 @@ const Cart = () => {
         dispatch(getAllCart())
     }, [dispatch])
     
+
+    //добавление тоавров из локльной корзины
+    useEffect(()=>{
+        if(!localStorage.getItem("localCart") || JSON.parse(localStorage.getItem("localCart")).length === 0){
+            return
+        }
+
+        const localCart = JSON.parse(localStorage.getItem("localCart"))
+
+        localCart.forEach(item=>{
+            axios.post("/cartLocal", item)
+            .then(respon=> dispatch(addProductCart(respon.data)))
+        })
+
+
+        localStorage.setItem("localCart", JSON.stringify([]))
+    }, [dispatch])
+
+
+
     
     //очистка корзины
     const clearCart = ()=>{

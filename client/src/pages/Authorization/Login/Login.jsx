@@ -36,7 +36,7 @@ const Login = () => {
 
     const inputEmail= {
         type: "email",
-        placeholder: 'почта',
+        placeholder: 'Эл. почта',
         name: 'email',
 
     }
@@ -44,7 +44,7 @@ const Login = () => {
     const inputPassword= {
         type: "password",
         minLength: "5",
-        placeholder: 'пароль',
+        placeholder: 'Пароль',
         name: 'password',
     }
     return (

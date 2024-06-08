@@ -8,8 +8,15 @@ header {
 }
 
 .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     color: var(--color-text-light);
-    font-size: 40px;
+}
+
+.logo > span {
+    font-size: 36px;
+    font-weight: 700;
 }
 
 .menu {

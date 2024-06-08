@@ -5,7 +5,7 @@ const getAll = async(req, res)=>{
     try{
         const favoriteData = await db.query(`SELECT Favorites.id, idProduct, imagePath, nameProduct 
         FROM Favorites, Products, Users 
-        WHERE Favorites.idUser = Users.id and Favorites.idProduct = Products.id and idUser = $1`, [req.id])
+        WHERE Favorites.idUser = Users.id and Favorites.idProduct = Products.id and idUser = $1 ORDER BY id`, [req.id])
 
         res.json(favoriteData.rows)
 

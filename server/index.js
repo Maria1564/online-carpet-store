@@ -20,7 +20,7 @@ app.use(cors())
 app.use("/uploads", express.static("uploads"))
 
 
-//сохранние картинок в uploads
+//сохранение картинок в uploads
 const storage = multer.diskStorage({
     destination: (_, __, cb) => {
         cb(null, "uploads")
@@ -33,17 +33,20 @@ const storage = multer.diskStorage({
 const upload =  multer({storage}) 
 
 
-//?получение картинки(запрос)
-app.post("/upload", upload.single("image"), (req, res)=>{
-    res.json({
-        url: `/uploads/${req.file.originalname}`
-    })
-})
+// //?получение картинки(запрос)
+// app.post("/upload", upload.single("image"), (req, res)=>{
+//     res.json({
+//         url: `/uploads/${req.file.originalname}`
+//     })
+// })
+
+
 
 
 //Товары (запросы)
 app.get("/products", ProductsController.getAll)
 app.get("/products/top", ProductsController.getTopProducts)
+app.post("/products/upload-image", upload.single("image"), ProductsController.addNewProduct)
 
 
 //Пользоваель (запросы)
@@ -58,6 +61,8 @@ app.post("/cart", checkAuth, cartController.addProduct)
 app.patch("/cart", checkAuth, cartController.plusOrMinusProduct)
 app.delete("/cart/:id", checkAuth, cartController.remove)
 app.delete("/cart", checkAuth, cartController.removeAll)
+
+app.post("/cartLocal", checkAuth, cartController.addLocalProduct)
 
 //Избранное (запросы)
 app.get("/favorites", checkAuth, favoriteController.getAll)
