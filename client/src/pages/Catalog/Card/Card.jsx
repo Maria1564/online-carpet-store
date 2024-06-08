@@ -106,8 +106,8 @@ const Card = ({item, sizes, favorites, cartProducts, setIsOpenModal, isAdmin}) =
     <div className={s.card}   id={item.id}>
   
         <div className={s.about}>
-        <img src={`${REACT_APP_SERVER_URL}${item.imagepath}`} alt={item.nameproduct} className={s.img_product} />
-        <span className={s.name}>{item.nameproduct}</span>
+          <img src={`${REACT_APP_SERVER_URL}${item.imagepath}`} alt={item.nameproduct} className={s.img_product} />
+          <span className={s.name}>{item.nameproduct}</span>
         </div>
 
         <div className={s.sizes}>
