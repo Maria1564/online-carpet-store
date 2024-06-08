@@ -22,11 +22,11 @@ const orderSlice = createSlice({
     extraReducers: (builder) => {
         builder 
             .addCase(getCurrentOrder.pending, (state, action)=>{
-                state.order = null
+                state.currentOrder = null
                 state.isError =  null
             })
             .addCase(getCurrentOrder.fulfilled, (state, action)=>{
-                state.order = action.payload
+                state.currentOrder = action.payload
             })
             .addCase(getCurrentOrder.rejected, (state, action)=>{
                 state.isError = action.payload

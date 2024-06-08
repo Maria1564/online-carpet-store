@@ -7,6 +7,7 @@ import axios from '../../axios'
 
 import { useDispatch, useSelector } from 'react-redux';
 import {getFavorites } from "../../redux/slices/favorite";
+import { getAllCart } from '../../redux/slices/cart';
 import Card from './Card/Card';
 import { ModalWindow } from "../../components/ui";
 
@@ -24,7 +25,7 @@ const Favoristes = () => {
 
   useEffect(()=>{
     axios.get("/sizes").then(({data})=>setSizes(data))
-
+    dispatch(getAllCart())
     dispatch(getFavorites())
   }, [dispatch])
    
