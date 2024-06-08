@@ -4,6 +4,7 @@ import { NavLink, Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../../redux/slices/auth'
 import Logo from "../../assets/img/logo.png"
+import { BsBasket2Fill } from "react-icons/bs";
 
 const setActive = ({isActive})=>isActive? s.active: ""
 const Navbar = ({isAuth, isAdmin}) => {
@@ -33,11 +34,12 @@ const Navbar = ({isAuth, isAdmin}) => {
           {!isAdmin && <li><NavLink to="/favorites" className={setActive}>Избранное</NavLink></li>}
 
           <span className={s.email}>{emailUser}</span>
+          
           <div className={s.auth}>
             {!isAdmin &&  
-            <li>
-              <Link className={s.auth_link} to="/cart">Корзина</Link>
-            </li>
+              <li>
+                <Link  to="/cart" className={s.cart_link}><BsBasket2Fill className={s.cart_icon} /></Link>
+              </li>
             }
             <li>
               <Link className={s.auth_link} to="/login"  onClick={handlerLogout}>Выход</Link>
@@ -47,6 +49,10 @@ const Navbar = ({isAuth, isAdmin}) => {
            : 
           
            <div className={s.auth}>
+            <li>
+                <Link  to="/login" className={`${s.cart_link} ${s.cart_not_empty}`} ><BsBasket2Fill  className={s.cart_icon} /></Link>
+            </li>
+
            <li>
              <Link className={s.auth_link} to="/register">Регистрация</Link>
            </li>

@@ -71,6 +71,30 @@ a{
     font-weight: 700;
 }
 
+.cart_link {
+    margin-right: 15px;
+}
+
+.cart_icon {
+    width: 35px;
+    height: 35px;
+}
+
+.cart_not_empty {
+    position: relative;
+}
+
+.cart_not_empty::after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: var(--color-green);
+    top: 12px;
+    right: 20px;
+    border-radius: 50%; 
+}
+
 @media screen and (max-width: 1035px) {
     header {
         padding: 47px 25px 47px;
