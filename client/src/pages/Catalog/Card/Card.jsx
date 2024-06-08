@@ -42,6 +42,8 @@ const Card = ({item, sizes, favorites, cartProducts, setIsOpenModal, isAdmin}) =
 
   //добавление в корзину товара
   const addCart = (idProduct) => {
+
+    //при невыбранном размере товара
     if(!selectSize[idProduct]){
       setIsOpenModal(true)
       document.body.classList.add('modal-open');
@@ -63,7 +65,9 @@ const Card = ({item, sizes, favorites, cartProducts, setIsOpenModal, isAdmin}) =
           idProduct,
           idSize: selectSize[idProduct]
         }))
-        
+
+         // вызов события cartUpdated при добавление первого товара в ещё пустую корзину
+         cartProducts.length === 0 && window.dispatchEvent(new CustomEvent("cartUpdated", {detail: false}))
       }
     }else{
 
@@ -71,7 +75,7 @@ const Card = ({item, sizes, favorites, cartProducts, setIsOpenModal, isAdmin}) =
         let isHaveCartProduct = localCart.some(product=>product.idProduct === idProduct && product.idSize === selectSize[idProduct])
         if(isHaveCartProduct){
 
-          localStorage?.setItem("localCart", JSON.stringify([...localCart.map(elem=>{
+          localStorage.setItem("localCart", JSON.stringify([...localCart.map(elem=>{
             if(elem.idProduct === idProduct && elem.idSize === selectSize[idProduct]){
               return {...elem, currentQuantity: elem.currentQuantity+=1}
             }
@@ -79,13 +83,18 @@ const Card = ({item, sizes, favorites, cartProducts, setIsOpenModal, isAdmin}) =
           })]))
 
         }else{
+          
           const idSize = selectSize[idProduct]
           const newCartProduct ={
             idProduct, 
             idSize,
             currentQuantity:1
-          }
-          localStorage.setItem("localCart", JSON.stringify([...localCart, newCartProduct]))
+            }
+            // вызов события localCartUpdated при добавление первого товара в ещё пустую корзину
+            localCart.length === 0 && window.dispatchEvent(new CustomEvent("localCartUpdated", {detail: false}))
+
+            localStorage.setItem("localCart", JSON.stringify([...localCart, newCartProduct]))
+
         }
     }
 

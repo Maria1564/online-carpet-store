@@ -13,13 +13,36 @@ import { fetchData } from "./redux/slices/auth";
 import Catalog from "./pages/Catalog/Catalog";
 import Favorites from "./pages/Favorites/Favorites";
 import Cart from "./pages/Cart/Cart";
+import axios from './axios';
+import {addProductCart} from "../src/redux/slices/cart"
+
 
 
 function App() {
   const dispatch = useDispatch()
+
+  const isAuth = useSelector(state=>state.auth.isAuth)
   useEffect(()=>{
     dispatch(fetchData())
   }, [])
+
+   //добавление тоавров из локальной корзины
+   useEffect(()=>{
+    if(!localStorage.getItem("localCart") || JSON.parse(localStorage.getItem("localCart")).length === 0){
+        return
+    }
+
+    const localCart = JSON.parse(localStorage.getItem("localCart"))
+
+    localCart.forEach(item=>{
+        axios.post("/cartLocal", item)
+        .then(respon=> dispatch(addProductCart(respon.data)))
+    })
+
+
+    localStorage.setItem("localCart", JSON.stringify([]))
+    window.dispatchEvent(new CustomEvent("localCartUpdated", {detail: true}))
+  }, [dispatch, isAuth])
 
   useEffect(()=>{
     if(!localStorage.getItem("localCart")){
@@ -29,7 +52,7 @@ function App() {
 
   return (
     <div className="App">
-      <Navbar isAuth={useSelector(state=>state.auth.isAuth)} isAdmin = {useSelector(state=>state.auth.infoUser?.isadmin)}/>
+      <Navbar isAuth={isAuth} isAdmin = {useSelector(state=>state.auth.infoUser?.isadmin)}/>
 
       <main>
         <Routes>

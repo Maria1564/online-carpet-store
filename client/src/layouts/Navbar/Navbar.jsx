@@ -1,19 +1,56 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import s from "./Navbar.module.css"
 import { NavLink, Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../../redux/slices/auth'
 import Logo from "../../assets/img/logo.png"
 import { BsBasket2Fill } from "react-icons/bs";
+import { getAllCart } from '../../redux/slices/cart'
 
 const setActive = ({isActive})=>isActive? s.active: ""
 const Navbar = ({isAuth, isAdmin}) => {
-  console.log("Nav",isAdmin )
   const emailUser = useSelector(state=> state.auth.infoUser?.email)
-
-  console.log(isAuth)
-
   const dispatch = useDispatch()
+  const arrProducts = useSelector(state=> state.cart.products)
+
+  
+  //пустая ли локальная корзина
+  const [localCartIsEmpty, setLocalCartIsEmpty] = useState(true)
+
+  //пустая ли корзина авторизованного пользователя
+  const [cartIsEmpty, setCartIsEmpty] = useState(true)
+
+  useEffect(()=>{
+    //подписка на событие localCartUpdated
+    window.addEventListener("localCartUpdated", (e)=>setLocalCartIsEmpty(e.detail))
+    
+    //подписка на событие cartUpdated
+    window.addEventListener("cartUpdated", (e)=> setCartIsEmpty(e.detail))
+  }, [])
+
+
+  // console.log(isAuth)
+
+
+  //получение данных о корзине при входе в аккаунт
+  useEffect(()=>{
+      if(isAuth) dispatch(getAllCart())
+    
+  }, [isAuth])
+
+
+  useEffect(()=>{
+    if(isAuth && !isAdmin && arrProducts.length){
+      setCartIsEmpty(false)
+      return
+    }
+
+    setCartIsEmpty(true)
+    
+    
+  }, [arrProducts, isAdmin, isAuth])
+
+
   const handlerLogout = ()=>{
     dispatch(logout())
     localStorage.removeItem("token")
@@ -38,7 +75,7 @@ const Navbar = ({isAuth, isAdmin}) => {
           <div className={s.auth}>
             {!isAdmin &&  
               <li>
-                <Link  to="/cart" className={s.cart_link}><BsBasket2Fill className={s.cart_icon} /></Link>
+                <Link  to="/cart" className={`${s.cart_link} ${cartIsEmpty === false && s.cart_not_empty}`}><BsBasket2Fill className={s.cart_icon} /></Link>
               </li>
             }
             <li>
@@ -50,7 +87,7 @@ const Navbar = ({isAuth, isAdmin}) => {
           
            <div className={s.auth}>
             <li>
-                <Link  to="/login" className={`${s.cart_link} ${s.cart_not_empty}`} ><BsBasket2Fill  className={s.cart_icon} /></Link>
+                <Link  to="/login" className={`${s.cart_link} ${localCartIsEmpty === false && s.cart_not_empty}`} ><BsBasket2Fill  className={s.cart_icon} /></Link>
             </li>
 
            <li>

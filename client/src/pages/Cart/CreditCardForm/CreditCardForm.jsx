@@ -31,7 +31,7 @@ const CreditCardForm = ({user, haveProducts, sumCart, setIsOpen}) => {
     const currentYear = String(new Date().getFullYear())
     const cardYear = dataCreditCard.expiry.slice(-2)
     const cardMonth = Number(dataCreditCard.expiry.slice(0, 2))
-    if(cardYear < currentYear.slice(-2) || (cardMonth <= 0 || cardMonth > 13)){
+    if(cardYear < currentYear.slice(-2) || (cardMonth <= 0 || cardMonth > 12)){
       return "месяц или год невалиден"
     }
 
@@ -134,6 +134,8 @@ const CreditCardForm = ({user, haveProducts, sumCart, setIsOpen}) => {
     document.body.classList.add('modal-open');
     setState(prev => ({...prev, number: '', expiry: '', cvc: '', name: ``, focus: ''}))
     dispatch(removeAll())
+
+    window.dispatchEvent(new CustomEvent("cartUpdated"), {detail: true})
   }
 
   return (

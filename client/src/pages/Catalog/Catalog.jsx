@@ -177,8 +177,6 @@ const Catalog = () => {
                 <div className={s.wrapper_new_product}>
                   <div className={s.add} onClick={handlerNewProduct}>
                     <input type="file" className={s.hidden} accept="image/*" ref={inputFileImage} onChange={(e)=>handlerImageUpload(e)}/>
-
-                    {/* <FaPlus className={s.icon_plus}/> */}
                     <span>Добаить новый товар</span>
                   </div>
                 </div>}
@@ -186,11 +184,7 @@ const Catalog = () => {
 
           <div className={s.cards}>
             {(Array.isArray(searchProducts) ? searchProducts : limitProducts).map((item,index) =>  
-            <React.Fragment key={index}>
-              <Card item={item} sizes={sizes} favorites={favorites} cartProducts={cartProducts} setIsOpenModal={setIsOpenModal} isAdmin={isAdmin}/>
-
-             
-            </React.Fragment>
+              <Card key={item.id} item={item} sizes={sizes} favorites={favorites} cartProducts={cartProducts} setIsOpenModal={setIsOpenModal} isAdmin={isAdmin}/>
             )}
           </div>
        

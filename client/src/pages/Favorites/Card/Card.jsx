@@ -51,6 +51,8 @@ const Card = ({item, sizes, cartProducts, setIsOpenModal}) => {
         idSize: selectSize[idProduct]
       }))
       
+      // вызов события cartUpdated при добавление первого товара в ещё пустую корзину
+      cartProducts.length === 0 && window.dispatchEvent(new CustomEvent("cartUpdated", {detail: false}))
     }
   }
 
