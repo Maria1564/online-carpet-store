@@ -33,15 +33,17 @@ const ListOrders = () => {
         }))
 
     }, [])
+
+    console.log(Object.keys({}).length)
   return (  
     <>
         <Wrapper text="История заказов" />
         <section className={s.list_orders}>
             <div className="container">
-            {/* <h2>Пусто</h2> */}
                 <div className={s.orders}>
                     
-                { Object.keys(orders)?.map((idOrder)=>(
+                {!Object.keys(orders).length? <h2>Нет заказов</h2> :
+                 Object.keys(orders).map((idOrder)=>(
                     <ItemOrder orders={orders} key={idOrder} idOrder={idOrder}/>
                 ))}
                 </div>
