@@ -28,6 +28,10 @@ function App() {
 
    //добавление тоавров из локальной корзины
    useEffect(()=>{
+
+    if(!isAuth) {
+      return
+    }
     if(!localStorage.getItem("localCart") || JSON.parse(localStorage.getItem("localCart")).length === 0){
         return
     }
@@ -37,6 +41,10 @@ function App() {
     localCart.forEach(item=>{
         axios.post("/cartLocal", item)
         .then(respon=> dispatch(addProductCart(respon.data)))
+        .catch(err => {
+          let dataErr =  JSON.parse(err.config.data) //{idProduct: 1, idSize: 2, currentQuantity: 1} idUser: 16
+  
+        })
     })
 
 

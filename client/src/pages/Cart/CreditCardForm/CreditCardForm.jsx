@@ -133,6 +133,7 @@ const CreditCardForm = ({user, haveProducts, sumCart, setIsOpen}) => {
     setIsOpen(true)
     document.body.classList.add('modal-open');
     setState(prev => ({...prev, number: '', expiry: '', cvc: '', name: ``, focus: ''}))
+    
     dispatch(removeAll())
 
     window.dispatchEvent(new CustomEvent("cartUpdated"), {detail: true})
