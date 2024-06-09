@@ -4,7 +4,7 @@ import s from "./ItemOrder.module.css"
 const ItemOrder = ({orders, idOrder}) => {
   return (
     <div  className={s.order}>
-        <span className={s.number_order}>Номер заказа: # {idOrder}</span>
+        <span className={s.number_order}>Номер заказа: #{idOrder}</span>
                     
         {orders[idOrder].map((itemOrder, index) => (
                 <div key={index} className={s.item_order}>

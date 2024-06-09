@@ -1,91 +1,39 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import s from "./ListOrder.module.css"
 
+import axios from "../../axios"
 import Wrapper from '../../layouts/Wrapper/Wrapper'
 import ItemOrder from './ItemOrder/ItemOrder';
 
 const ListOrders = () => {
 
-    const orders = {
-        "96": [
-            {
-                "idorder": 96,
-                "nameproduct": "Cat",
-                "sizename": "большой",
-                "quantity": 6,
-                "sum": "72000"
-            },
-            {
-                "idorder": 96,
-                "nameproduct": "Corgi",
-                "sizename": "большой",
-                "quantity": 2,
-                "sum": "24000"
-            },
-            {
-                "idorder": 96,
-                "nameproduct": "Corgi",
-                "sizename": "маленький",
-                "quantity": 5,
-                "sum": "16000"
-            },
-            {
-                "idorder": 96,
-                "nameproduct": "Flower",
-                "sizename": "маленький",
-                "quantity": 2,
-                "sum": "6400"
-            }
-        ],
-        "97": [
-            {
-                "idorder": 97,
-                "nameproduct": "DogFace",
-                "sizename": "маленький",
-                "quantity": 8,
-                "sum": "25600"
-            },
-            {
-                "idorder": 97,
-                "nameproduct": "DogFace",
-                "sizename": "средний",
-                "quantity": 2,
-                "sum": "13000"
-            },
-            {
-                "idorder": 97,
-                "nameproduct": "Smile",
-                "sizename": "маленький",
-                "quantity": 1,
-                "sum": "3200"
-            }
-        ],
-        "98": [
-            {
-                "idorder": 97,
-                "nameproduct": "DogFace",
-                "sizename": "маленький",
-                "quantity": 8,
-                "sum": "25600"
-            },
-            {
-                "idorder": 97,
-                "nameproduct": "DogFace",
-                "sizename": "средний",
-                "quantity": 2,
-                "sum": "13000"
-            },
-            {
-                "idorder": 97,
-                "nameproduct": "Smile",
-                "sizename": "маленький",
-                "quantity": 1,
-                "sum": "3200"
-            }
-        ]
-    };
+    const [orders,setOrders] = useState({})
+    const arrOrders = []
 
-  return (
+    //получение и обработка данных
+    useEffect(()=>{
+        axios.get("/orders/history")
+        .then(({data})=>data.forEach((order, index, arr)=>{
+            
+            if(index !== 0) {
+                if(arr[index-1].idorder !== arr[index].idorder){
+                    arrOrders.push(arr[index].idorder)
+                    }
+                    }else{
+                        
+                        arrOrders.push(order.idorder)
+                        }
+                        
+            const updatedOrders  = {};
+
+            arrOrders.forEach(idOrder => {
+                updatedOrders[idOrder] = data.filter(item => item.idorder === idOrder);
+                });
+            setOrders(prev => ({...prev, ...updatedOrders}))
+        }))
+
+    }, [])
+  return (  
     <>
         <Wrapper text="История заказов" />
         <section className={s.list_orders}>
@@ -94,7 +42,7 @@ const ListOrders = () => {
                 <div className={s.orders}>
                     
                 { Object.keys(orders)?.map((idOrder)=>(
-                    <ItemOrder orders={orders} keys={idOrder} idOrder={idOrder}/>
+                    <ItemOrder orders={orders} key={idOrder} idOrder={idOrder}/>
                 ))}
                 </div>
             </div>
