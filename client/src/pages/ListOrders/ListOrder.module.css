@@ -1,0 +1,13 @@
+section.list_orders {
+    min-height: 380px;
+    color: var(--color-text-light);
+}
+
+.orders {
+    max-width: 700px;
+    margin: 0 auto;
+    padding-bottom: 30px;
+}
+
+
+

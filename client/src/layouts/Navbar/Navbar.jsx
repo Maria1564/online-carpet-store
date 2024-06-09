@@ -67,22 +67,34 @@ const Navbar = ({isAuth, isAdmin}) => {
           <li><NavLink to="/aboutUs" className={setActive}>О нас</NavLink></li>
           <li><NavLink to="/catalog" className={setActive}>Каталог</NavLink></li>
           {/* <li><NavLink to="/reviews" className={setActive}>Отзывы</NavLink></li> */}
-          {isAuth ?  <>
-          {!isAdmin && <li><NavLink to="/favorites" className={setActive}>Избранное</NavLink></li>}
+          {isAuth ? 
+          <>
 
-          <span className={s.email}>{emailUser}</span>
-          
-          <div className={s.auth}>
-            {!isAdmin &&  
+            {!isAdmin && 
+            <>
               <li>
-                <Link  to="/cart" className={`${s.cart_link} ${cartIsEmpty === false && s.cart_not_empty}`}><BsBasket2Fill className={s.cart_icon} /></Link>
+                <NavLink to="/favorites" className={setActive}>Избранное</NavLink>
               </li>
-            }
-            <li>
-              <Link className={s.auth_link} to="/login"  onClick={handlerLogout}>Выход</Link>
-            </li>
-          </div>
+              <li>
+                <NavLink to="/history" className={setActive}>История</NavLink>
+              </li>
+            </>
+              }
+
+            <span className={s.email}>{emailUser}</span>
+            
+            <div className={s.auth}>
+              {!isAdmin &&  
+                <li>
+                  <Link  to="/cart" className={`${s.cart_link} ${cartIsEmpty === false && s.cart_not_empty}`}><BsBasket2Fill className={s.cart_icon} /></Link>
+                </li>
+              }
+              <li>
+                <Link className={s.auth_link} to="/login"  onClick={handlerLogout}>Выход</Link>
+              </li>
+            </div>
           </>
+
            : 
           
            <div className={s.auth}>
