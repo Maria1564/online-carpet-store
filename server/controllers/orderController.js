@@ -27,11 +27,17 @@ const create = async(req, res)=>{
 //получение истории заказов
 const getHistoryOrders = async(req, res) => {
     try{
+        const listOrders = await db.query(`
+            SELECT idOrder,  pr.nameProduct, s.name as sizeName, oi.quantity, SUM(oi.quantity * s.price)
+            FROM Orders o, orderItems oi, users u, products pr, sizes s
+            where o.iduser = u.id and oi.idProduct = pr.id and oi.idSize = s.id and oi.idOrder = o.id and  o.idUser = $1
+            GROUP BY oi.idOrder,  pr.nameProduct, s.name, oi.quantity ORDER BY oi.idOrder`, [req.id])
 
+            res.json(listOrders.rows)
     }catch(err){
         console.log(err.message)
         res.status(400).json({
-            message: "Не удалось получить список заказов"
+            message: "Не удалось получить историю заказов"
         })
     }
 }
