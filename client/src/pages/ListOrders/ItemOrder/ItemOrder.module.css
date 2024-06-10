@@ -10,14 +10,12 @@
 .number_order {
     display: block;
     max-width: max-content;
-    margin-bottom: 20px;
     font-size: 28px;
     font-weight: 700;
     color: var(--color-green);
 }
 
 .item_order {
-    /* border: 1px, solid red; */
     padding: 28px 20px 25px 40px;
     display: flex;
     align-items: flex-start;
@@ -51,4 +49,11 @@
 .price {
     font-size: 21px;
     font-weight: 500;
+}
+
+.info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
 }
