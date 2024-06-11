@@ -37,13 +37,12 @@ const getHistoryOrders = async(req, res) => {
         const arrOrders = await db.query(`
             SELECT orders.id, status
             FROM orders, users
-            WHERE users.id = orders.idUser and idUser = $1`, [req.id])
+            WHERE users.id = orders.idUser and idUser = $1 ORDER BY orders.id DESC`, [req.id])
         
         //обработка данных
         const newData = []
         
         arrOrders.rows.length != 0 &&  arrOrders.rows.forEach((order) => {
-            // console.log( listItemsOrders.rows)
             let itemsOrder = listItemsOrders.rows.filter(item => item.idorder === order.id )
             itemsOrder = itemsOrder.map(item =>{
                  delete item.idorder
@@ -61,7 +60,8 @@ const getHistoryOrders = async(req, res) => {
         })
     
 
-            res.json(newData)
+        res.json(newData)
+        
     }catch(err){
         console.log(err.message)
         res.status(400).json({
@@ -70,7 +70,26 @@ const getHistoryOrders = async(req, res) => {
     }
 }
 
+// изменение статуса заказа
+const changeOrderStatus = async(req, res)=> {
+    try{
+        const {idOrder, newStatus} = req.body
+
+        const updatedOrder = await db.query(` UPDATE orders SET status= $1
+        WHERE id = $2 RETURNING id as idOrder, status`, [newStatus, idOrder])
+
+        res.json(updatedOrder.rows[0])
+    }catch(err){
+        console.log(err.message)
+        res.status(400).json({
+            message: `Не удалось поменять статус заказа ${req.body.idOrder}`
+        })
+    }
+
+}
+
 module.exports = {
     create,
-    getHistoryOrders
+    getHistoryOrders,
+    changeOrderStatus
 }

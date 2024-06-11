@@ -72,6 +72,7 @@ app.delete("/favorites/:id", checkAuth, favoriteController.removeOne)
 //Заказы (запрос)
 app.post("/orders", checkAuth, orderController.create)
 app.get('/orders/history', checkAuth, orderController.getHistoryOrders)
+app.patch("/orders", checkAuth, orderController.changeOrderStatus)
 
 //Размеры товара (запрос)
 app.get("/sizes", sizeController.getSizes)
