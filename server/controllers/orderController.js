@@ -29,12 +29,39 @@ const create = async(req, res)=>{
 //получение истории заказов
 const getHistoryOrders = async(req, res) => {
     try{
-        const listOrders = await db.query(`
-            SELECT idOrder,  pr.nameProduct, s.name as sizeName, oi.quantity, oi.price
+        const listItemsOrders = await db.query(`
+            SELECT idOrder,  pr.nameProduct, s.name as sizeName, oi.quantity, oi.price, pr.imagepath
             FROM Orders o, orderItems oi, users u, products pr, sizes s
             WHERE o.iduser = u.id and oi.idProduct = pr.id and oi.idSize = s.id and oi.idOrder = o.id and  o.idUser =$1`, [req.id])
 
-            res.json(listOrders.rows)
+        const arrOrders = await db.query(`
+            SELECT orders.id, status
+            FROM orders, users
+            WHERE users.id = orders.idUser and idUser = $1`, [req.id])
+        
+        //обработка данных
+        const newData = []
+        
+        arrOrders.rows.length != 0 &&  arrOrders.rows.forEach((order) => {
+            // console.log( listItemsOrders.rows)
+            let itemsOrder = listItemsOrders.rows.filter(item => item.idorder === order.id )
+            itemsOrder = itemsOrder.map(item =>{
+                 delete item.idorder
+                 return item
+                
+                })
+     
+             let newOrderObj = {
+                 [order.id] : itemsOrder,
+                 "status": order["status"]
+             }
+             
+             newData.push(newOrderObj)
+             
+        })
+    
+
+            res.json(newData)
     }catch(err){
         console.log(err.message)
         res.status(400).json({
