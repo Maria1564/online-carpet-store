@@ -26,7 +26,30 @@ const create = async(req, res)=>{
     }
 }
 
-//получение истории заказов
+//получение всего списка заказов
+const getAllOrders = async(req, res) => {
+    try{
+        const orders = await db.query("SELECT id, total, orderdate, status FROM Orders")
+        console.log("orders", orders.rows)
+        let updatedOrder
+        if(!orders.rows.length){
+            return res.json([])
+        }
+        updatedOrder = orders.rows.map(order => {
+            return {...order, orderdate: order.orderdate.toLocaleDateString().split(".").reverse().join("-")}
+        })
+        
+        res.json([...updatedOrder])
+
+    }catch(err){
+        console.log(err.message)
+        res.status(400).json({
+            message: "Не удалось получить список всех заказов"
+        })
+    }
+}
+
+//получение истории заказов (для конкретного пользователя)
 const getHistoryOrders = async(req, res) => {
     try{
         const listItemsOrders = await db.query(`
@@ -70,6 +93,8 @@ const getHistoryOrders = async(req, res) => {
     }
 }
 
+
+
 // изменение статуса заказа
 const changeOrderStatus = async(req, res)=> {
     try{
@@ -91,5 +116,6 @@ const changeOrderStatus = async(req, res)=> {
 module.exports = {
     create,
     getHistoryOrders,
+    getAllOrders,
     changeOrderStatus
 }

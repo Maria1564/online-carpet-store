@@ -71,6 +71,7 @@ app.delete("/favorites/:id", checkAuth, favoriteController.removeOne)
 
 //Заказы (запрос)
 app.post("/orders", checkAuth, orderController.create)
+app.get("/orders", checkAuth, orderController.getAllOrders)
 app.get('/orders/history', checkAuth, orderController.getHistoryOrders)
 app.patch("/orders", checkAuth, orderController.changeOrderStatus)
 

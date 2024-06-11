@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "../../axios";
 
+//получение текущего заказа
 export const getCurrentOrder = createAsyncThunk( "order/fetCurrentOrder", async(params, {rejectWithValue})=>{
     try {
         const {data} = await axios.post("/orders", params)
@@ -10,6 +11,9 @@ export const getCurrentOrder = createAsyncThunk( "order/fetCurrentOrder", async(
         return rejectWithValue("Не удалось создать заказ")
     }
 })
+
+//получение всех заказов
+
 
 const initialState = {
     currentOrder: null,
