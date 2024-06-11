@@ -51,14 +51,19 @@ const Card = ({item, sizes, cartProducts, setIsOpenModal}) => {
         idSize: selectSize[idProduct]
       }))
       
+      // вызов события cartUpdated при добавление первого товара в ещё пустую корзину
+      cartProducts.length === 0 && window.dispatchEvent(new CustomEvent("cartUpdated", {detail: false}))
     }
   }
 
 
   return (
     <div className={`${s.card} ${style.card_favorite}`} id={item.id} >
-        <img src={`${REACT_APP_SERVER_URL}${item.imagepath}`} alt={item.nameproduct} className={s.img_product} />
-        <span className={s.name}>{item.nameproduct}</span>
+        <div className={s.about}>
+            <img src={`${REACT_APP_SERVER_URL}${item.imagepath}`} alt={item.nameproduct} className={s.img_product} />
+            <span className={s.name}>{item.nameproduct}</span>
+        </div>
+
         <div className={s.sizes}>
         {sizes.length && sizes.map(({id, name, price})=>(
             <div className={`${s.size} ${selectSize[item.idproduct] === id && s.size_select}`} id={id} key={id} onClick={()=>handlerSelectSize(item.idproduct, id)}>

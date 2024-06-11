@@ -33,7 +33,7 @@ const Register = () => {
     const inputFllName= {
         type: "text",
         minLength:"3",
-        placeholder: 'ФИО',
+        placeholder: 'Имя (фамилия - по желанию)',
         name: 'fullname',
     }
 

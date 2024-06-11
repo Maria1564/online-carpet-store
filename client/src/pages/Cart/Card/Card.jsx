@@ -36,6 +36,7 @@ const Card = ({item}) => {
         document.body.classList.remove('modal-open')
     }
 
+
   return (
   <>
     <div className={s.product} >
@@ -54,7 +55,7 @@ const Card = ({item}) => {
                 <button className={s.btn_plus}
                 onClick={()=> handlerPlus(item.id, item.quantity)}>+</button>
             </div>
-            <span className={s.price_product}>{item.price} руб</span>
+            <span className={s.price_product}>{item.price * item.quantity} руб</span>
             <div className={s.close} onClick={()=>removeOneProduct()}>
                 <RxCross2 className={s.icon_cross} />
             </div>

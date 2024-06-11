@@ -50,9 +50,11 @@ const Catalog = () => {
   
 
   useEffect(()=>{
-    setLimitProducts(prev=>{
-      return[...prev, ...products.slice(limitProducts.length, limitProducts.length+4 )]
-    } )
+    if(limitProducts.length === 0){
+      setLimitProducts(prev=>{
+        return[...prev, ...products.slice(limitProducts.length, limitProducts.length+4 )]
+      } )
+    }
   }, [products])
 
   
@@ -170,22 +172,19 @@ const Catalog = () => {
             </div>
           </div>}
         </div>
-
-          <div className={s.cards}>
-            {(Array.isArray(searchProducts) ? searchProducts : limitProducts).map((item,index) =>  
-            <React.Fragment key={index}>
-              <Card item={item} sizes={sizes} favorites={favorites} cartProducts={cartProducts} setIsOpenModal={setIsOpenModal} isAdmin={isAdmin}/>
-
-              {/* карточка для добавления нового корика */}
-              {(isAdmin && index+1 === products.length) && 
+             {/* карточка для добавления нового корика */}
+             {(isAdmin ) && 
                 <div className={s.wrapper_new_product}>
                   <div className={s.add} onClick={handlerNewProduct}>
                     <input type="file" className={s.hidden} accept="image/*" ref={inputFileImage} onChange={(e)=>handlerImageUpload(e)}/>
-
-                    <FaPlus className={s.icon_plus}/>
+                    <span>Добаить новый товар</span>
                   </div>
                 </div>}
-            </React.Fragment>
+
+
+          <div className={s.cards}>
+            {(Array.isArray(searchProducts) ? searchProducts : limitProducts).map((item,index) =>  
+              <Card key={item.id} item={item} sizes={sizes} favorites={favorites} cartProducts={cartProducts} setIsOpenModal={setIsOpenModal} isAdmin={isAdmin}/>
             )}
           </div>
        

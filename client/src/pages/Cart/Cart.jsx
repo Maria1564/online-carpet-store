@@ -5,19 +5,17 @@ import Wrapper from "../../layouts/Wrapper/Wrapper";
 import { Link} from 'react-router-dom';
 import { IoIosArrowBack } from "react-icons/io";
 import {useDispatch, useSelector} from "react-redux"
-import {addProductCart, getAllCart,removeAll} from "../../redux/slices/cart"
+import {getAllCart,removeAll} from "../../redux/slices/cart"
 import Card from './Card/Card';
 import CreditCardForm from './CreditCardForm/CreditCardForm';
 import Modal from './Modal/Modal';
 import { ModalWindow } from '../../components/ui';
-import axios from '../../axios';
 
 
 const Cart = () => {
     const dispatch = useDispatch()
     const {products} = useSelector(state => state.cart)
     const user = useSelector(state => state.auth.infoUser)
-
     const [isOpen, setIsOpen] = useState(false)
 
     //статус модалки при нажатии на кнопку "Очистить корзину"
@@ -29,31 +27,23 @@ const Cart = () => {
     }, [dispatch])
     
 
-    //добавление тоавров из локльной корзины
+   
+
+    
     useEffect(()=>{
-        if(!localStorage.getItem("localCart") || JSON.parse(localStorage.getItem("localCart")).length === 0){
-            return
+        if(products.length === 0){
+            window.dispatchEvent(new CustomEvent("cartUpdated", {detail: true}))
+        }else{
+            window.dispatchEvent(new CustomEvent("cartUpdated", {detail: false}))
         }
-
-        const localCart = JSON.parse(localStorage.getItem("localCart"))
-
-        localCart.forEach(item=>{
-            axios.post("/cartLocal", item)
-            .then(respon=> dispatch(addProductCart(respon.data)))
-        })
-
-
-        localStorage.setItem("localCart", JSON.stringify([]))
-    }, [dispatch])
-
-
+    }, [products])
 
     
     //очистка корзины
     const clearCart = ()=>{
         dispatch(removeAll())
         setIsOpenModalDelAll(false)
-        document.body.classList.remove('modal-open')    
+        document.body.classList.remove('modal-open')  
     }
 
     const showModal = () => {
