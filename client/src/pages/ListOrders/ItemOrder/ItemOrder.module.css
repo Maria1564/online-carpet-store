@@ -13,6 +13,7 @@
     font-size: 28px;
     font-weight: 700;
     color: var(--color-green);
+    margin-top: 10px;
 }
 
 .item_order {
@@ -26,6 +27,18 @@
 
 .item_order:not(:last-child){
     margin-bottom: 10px;
+}
+
+.info_order {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.info_order > img {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
 }
 
 .about {
@@ -56,4 +69,27 @@
     align-items: center;
     justify-content: space-between;
     margin-bottom: 20px;
+}
+
+.assembled,
+.waiting_pickup,
+.completed{
+    font-size: 18px;
+    padding: 2px 15px;
+    border-radius: 8px
+}
+
+.assembled {
+    background-color: #E3DF79;
+    color: #817C09;
+}
+
+.waiting_pickup {
+    background-color: #F26E9D;
+    color: #7E2407;
+}
+
+.completed {
+    background-color: #57B4F8;
+    color: #00538F;
 }

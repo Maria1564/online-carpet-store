@@ -7,34 +7,21 @@ import ItemOrder from './ItemOrder/ItemOrder';
 
 const ListOrders = () => {
 
-    const [orders,setOrders] = useState({})
-    const arrOrders = []
-
+    const [orders,setOrders] = useState([])
+    const [idOrders, setIdOrders] = useState([])
     //получение и обработка данных
     useEffect(()=>{
+       
         axios.get("/orders/history")
-        .then(({data})=>data.forEach((order, index, arr)=>{
-            
-            if(index !== 0) {
-                if(arr[index-1].idorder !== arr[index].idorder){
-                    arrOrders.push(arr[index].idorder)
-                }
-            }else{
-                        
-                arrOrders.push(order.idorder)
-            }
-                        
-            const updatedOrders  = {};
+        .then(({data})=> {
+            setOrders(prev=> [...data])
 
-            arrOrders.forEach(idOrder => {
-                updatedOrders[idOrder] = data.filter(item => item.idorder === idOrder);
-            });
-            setOrders(prev => ({...prev, ...updatedOrders}))
-        }))
+           const arrIdOrders = data.map(order=> Object.keys(order)[0])
+           setIdOrders(prev=> [...arrIdOrders])
+        })
 
     }, [])
-
-    console.log(Object.keys({}).length)
+    console.log("idOrders", idOrders)
   return (  
     <>
         <Wrapper text="История заказов" />
@@ -42,9 +29,9 @@ const ListOrders = () => {
             <div className="container">
                 <div className={s.orders}>
                     
-                {!Object.keys(orders).length? <h2>Нет заказов</h2> :
-                 Object.keys(orders).reverse().map((idOrder)=>(
-                    <ItemOrder orders={orders} key={idOrder} idOrder={idOrder}/>
+                {!orders.length ? <h2>Нет заказов</h2> :
+                 idOrders.map((idOrder, index)=>(
+                    <ItemOrder itemsOrder={orders[index][idOrder]} key={idOrder} idOrder={idOrder} orderStatus={orders[index]["status"]}/>
                 ))}
                 </div>
             </div>
