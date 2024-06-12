@@ -45,3 +45,20 @@
     height: 25px;
     color: #102b3e;
 }
+
+.list_status {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.list_status > div {
+    font-size: 20px;
+    padding: 12px 15px;
+    cursor: pointer;
+    transition: transform .5s;
+}
+
+.list_status > div:hover {
+    transform: scale(1.1);
+}

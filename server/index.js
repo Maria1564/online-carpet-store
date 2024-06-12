@@ -75,6 +75,8 @@ app.get("/orders", checkAuth, orderController.getAllOrders)
 app.get('/orders/history', checkAuth, orderController.getHistoryOrders)
 app.patch("/orders", checkAuth, orderController.changeOrderStatus)
 
+app.get("/order/all-statuses", orderController.getAllStatuses)
+
 //Размеры товара (запрос)
 app.get("/sizes", sizeController.getSizes)
 app.patch("/sizes", checkAuth, sizeController.changePrice)

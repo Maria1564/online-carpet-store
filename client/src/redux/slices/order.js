@@ -23,6 +23,21 @@ export const getAllOrders = createAsyncThunk("order/getAllOrders", async(params,
     }
 })
 
+//изменение статуса заказа
+export const changeStatusOrder = createAsyncThunk("order/changeStatusOrder", async(params, {rejectWithValue, dispatch})=>{
+    try{
+        const {data} = await axios.patch("/orders", params)
+
+        dispatch(changeStatus(data))
+
+
+    }catch(err){
+        console.log(err.message)
+
+        return rejectWithValue("Не удалось обновить статус заказа")
+    }
+})
+
 const initialState = {
     listOrders: null,
     currentOrder: null,
@@ -32,6 +47,21 @@ const initialState = {
 const orderSlice = createSlice({
     name: "order",
     initialState,
+    reducers:{
+        changeStatus: (state, action)=>{
+            state.listOrders = state.listOrders.map(order=>{
+                if(action.payload.idorder === order.id){
+                    console.log(order.id)
+                    return {
+                        ...order,
+                        status: action.payload.status
+                    }
+                }
+
+                return order
+            })
+        }   
+    },
     extraReducers: (builder) => {
         builder 
             .addCase(getCurrentOrder.pending, (state, action)=>{
@@ -55,7 +85,18 @@ const orderSlice = createSlice({
             .addCase(getAllOrders.rejected  , (state, action)=> {
                 state.isError = action.payload
             })
+
+            .addCase(changeStatusOrder.pending, (state, action)=>{
+                state.isError = null
+            })
+            .addCase(changeStatusOrder.fulfilled, (state, action)=>{
+
+            })
+            .addCase(changeStatusOrder.rejected, (state, action)=>{
+                state.isError = action.payload
+            })
     }
 })
 
+export const {changeStatus} =  orderSlice.actions
 export default orderSlice.reducer

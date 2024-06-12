@@ -115,9 +115,25 @@ const changeOrderStatus = async(req, res)=> {
 
 }
 
+//получение списка статусов
+const getAllStatuses = async(req, res)=>{
+    try{
+        const statuses = await db.query("SELECT to_json(enum_range(null::order_state))")
+        
+        res.json(statuses.rows[0].to_json)
+    }catch(err){
+        console.log(err.message)
+        res.status(400).json({
+            message: "Не удалось получить статусы"
+        })
+    }
+
+}
+
 module.exports = {
     create,
     getHistoryOrders,
     getAllOrders,
-    changeOrderStatus
+    changeOrderStatus,
+    getAllStatuses
 }

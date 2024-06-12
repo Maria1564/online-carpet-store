@@ -41,7 +41,7 @@ const AdminListOrders = () => {
                     filteredOrders.map(order => (
                         <AdminItemOrder key={order.id} order={order}/>
                     ))}   
-                    
+
                 </div>
             </div>
         </section>
