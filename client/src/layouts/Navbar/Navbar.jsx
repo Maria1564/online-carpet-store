@@ -69,12 +69,13 @@ const Navbar = ({isAuth, isAdmin}) => {
           <li><NavLink to="/aboutUs" className={setActive}>О нас</NavLink></li>
         </>
         }
+
           <li><NavLink to="/catalog" className={setActive}>Каталог</NavLink></li>
-          {/* <li><NavLink to="/reviews" className={setActive}>Отзывы</NavLink></li> */}
+
           {isAuth ? 
           <>
 
-            {!isAdmin && 
+            {!isAdmin ? 
             <>
               <li>
                 <NavLink to="/favorites" className={setActive}>Избранное</NavLink>
@@ -83,6 +84,12 @@ const Navbar = ({isAuth, isAdmin}) => {
                 <NavLink to="/history" className={setActive}>История</NavLink>
               </li>
             </>
+            : 
+            <>
+              <li><NavLink to="/orders" className={setActive}>Обработка заказов</NavLink></li>
+              <li><NavLink to="/orders-archive" className={setActive}>Архив заказов</NavLink></li>
+            </>
+
               }
 
             <span className={s.email}>{emailUser}</span>
@@ -119,5 +126,7 @@ const Navbar = ({isAuth, isAdmin}) => {
     </header>
   )
 }
+
+          {/* <li><NavLink to="/reviews" className={setActive}>Отзывы</NavLink></li> */}
 
 export default  Navbar

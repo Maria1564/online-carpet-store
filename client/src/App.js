@@ -16,6 +16,7 @@ import Cart from "./pages/Cart/Cart";
 import axios from './axios';
 import {addProductCart} from "../src/redux/slices/cart"
 import ListOrders from "./pages/ListOrders/ListOrders";
+import AdminListOrders from "./pages/AdminListOrders/AdminListOrders";
 
 
 
@@ -71,6 +72,8 @@ function App() {
           <Route path="/favorites"element={<Favorites/>}></Route>
           <Route path="/cart"element={<Cart/>}></Route>
           <Route path="/history"element={<ListOrders/>}></Route>
+
+          <Route path="/orders"element={<AdminListOrders/>}></Route>
 
           <Route path="/register" element={<Register/>}></Route>
           <Route path="/login" element={<Login/>}></Route>

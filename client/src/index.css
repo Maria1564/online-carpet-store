@@ -139,6 +139,29 @@ button:disabled {
     overflow: hidden;
 }   
 
+.assembled,
+.waiting_pickup,
+.completed{
+    font-size: 18px;
+    padding: 2px 15px;
+    border-radius: 8px
+}
+
+.assembled {
+    background-color: #E3DF79;
+    color: #5b570c;
+}
+
+.waiting_pickup {
+    background-color: #F26E9D;
+    color: #7E2407;
+}
+
+.completed {
+    background-color: #57B4F8;
+    color: #00538F;
+}
+
 @media screen and (max-width: 1344px){
     .container {
         max-width: 85%;

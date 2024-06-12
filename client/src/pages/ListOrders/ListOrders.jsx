@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import s from "./ListOrder.module.css"
+import s from "./ListOrders.module.css"
 
 import axios from "../../axios"
 import Wrapper from '../../layouts/Wrapper/Wrapper'

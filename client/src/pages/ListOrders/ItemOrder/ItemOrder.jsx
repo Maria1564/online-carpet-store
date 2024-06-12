@@ -4,8 +4,6 @@ import s from "./ItemOrder.module.css"
 import { REACT_APP_SERVER_URL } from "../../../config";
 
 const ItemOrder = ({itemsOrder, idOrder, orderStatus}) => {
-    console.log(itemsOrder, orderStatus)
-
 
     // классы для статусов заказа
     const statusStyle = {
@@ -18,7 +16,7 @@ const ItemOrder = ({itemsOrder, idOrder, orderStatus}) => {
     <div  className={s.order}>
         <div className={s.info}>
             <div className="">
-                <span className={s[`${statusStyle[orderStatus]}`]}>{orderStatus}</span>
+                <span className={`${statusStyle[orderStatus]}`}>{orderStatus}</span>
                 <span className={s.number_order}>Номер заказа: #{idOrder}</span>
             </div>   
         
