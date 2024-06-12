@@ -31,7 +31,11 @@ const Login = () => {
 
     if(isAuth) {
         localStorage.setItem('token', infoUser.token);
-        return <Navigate to={"/"} />
+        if(infoUser.isadmin) {
+            return <Navigate to={"/catalog"} />
+        }else{
+            return <Navigate to={"/"} />
+        }
     }
 
     const inputEmail= {

@@ -63,8 +63,12 @@ const Navbar = ({isAuth, isAdmin}) => {
       </Link>
       <nav >
         <ul className={s.menu}>
+        {!isAdmin && 
+        <>
           <li><NavLink to="/" className={setActive} >Главная</NavLink></li>
           <li><NavLink to="/aboutUs" className={setActive}>О нас</NavLink></li>
+        </>
+        }
           <li><NavLink to="/catalog" className={setActive}>Каталог</NavLink></li>
           {/* <li><NavLink to="/reviews" className={setActive}>Отзывы</NavLink></li> */}
           {isAuth ? 
