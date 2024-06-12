@@ -125,7 +125,7 @@ button {
     color: var(--color-text-light);
 }
 
-button:not(:disabled):hover{
+button:not(.admin_btn_status):not(:disabled):hover{
     background: var(--color-dark-primary);
     border: 2px solid var(--color-text-light);
     transform: scale(1.2);
@@ -162,6 +162,15 @@ button:disabled {
     color: #00538F;
 }
 
+.admin_btn_status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.admin_btn_status:hover {
+    transform: scale(1.1);
+}
 @media screen and (max-width: 1344px){
     .container {
         max-width: 85%;

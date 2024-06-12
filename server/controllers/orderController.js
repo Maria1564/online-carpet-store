@@ -29,14 +29,16 @@ const create = async(req, res)=>{
 //получение всего списка заказов
 const getAllOrders = async(req, res) => {
     try{
-        const orders = await db.query("SELECT id, total, orderdate, status FROM Orders")
-        console.log("orders", orders.rows)
+        const orders = await db.query(`SELECT Orders.id, Users.email as userEmail, total, orderdate, status 
+                                    FROM Orders, Users 
+                                    WHERE Orders.idUser = Users.id ORDER BY id DESC`)
+
         let updatedOrder
         if(!orders.rows.length){
             return res.json([])
         }
         updatedOrder = orders.rows.map(order => {
-            return {...order, orderdate: order.orderdate.toLocaleDateString().split(".").reverse().join("-")}
+            return {...order, orderdate: order.orderdate.toLocaleDateString().split(".").join("-")}
         })
         
         res.json([...updatedOrder])

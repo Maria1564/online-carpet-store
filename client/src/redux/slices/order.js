@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "../../axios";
 
 //получение текущего заказа
-export const getCurrentOrder = createAsyncThunk( "order/fetCurrentOrder", async(params, {rejectWithValue})=>{
+export const getCurrentOrder = createAsyncThunk( "order/fetchCurrentOrder", async(params, {rejectWithValue})=>{
     try {
         const {data} = await axios.post("/orders", params)
 
@@ -13,9 +13,18 @@ export const getCurrentOrder = createAsyncThunk( "order/fetCurrentOrder", async(
 })
 
 //получение всех заказов
+export const getAllOrders = createAsyncThunk("order/getAllOrders", async(params, {rejectWithValue})=>{
+    try{
+        const {data} = await axios.get("/orders")
 
+        return data
+    }catch(err){
+        return rejectWithValue("Не удалось получить список заказов")
+    }
+})
 
 const initialState = {
+    listOrders: null,
     currentOrder: null,
     isError: null
 }
@@ -33,6 +42,17 @@ const orderSlice = createSlice({
                 state.currentOrder = action.payload
             })
             .addCase(getCurrentOrder.rejected, (state, action)=>{
+                state.isError = action.payload
+            })
+
+            .addCase(getAllOrders.pending, (state, action)=>{
+                state.isError = null
+                state.listOrders = null
+            })
+            .addCase(getAllOrders.fulfilled, (state, action)=>{
+                state.listOrders = action.payload
+            })
+            .addCase(getAllOrders.rejected  , (state, action)=> {
                 state.isError = action.payload
             })
     }
