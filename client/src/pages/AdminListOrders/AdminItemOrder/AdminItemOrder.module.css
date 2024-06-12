@@ -1,0 +1,47 @@
+.order {
+    padding: 48px 20px 30px;
+    border-bottom: 1px solid #ced8e182;
+}
+
+.info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.order_number {
+    max-width: max-content;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--color-green);
+    margin-top: 10px;
+    margin-right: 20px;
+}
+
+.email {
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.other {
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.date {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--color-grey);
+}
+
+.sum {
+    color: var(--color-grey);
+}
+
+.icon_pen {
+    width: 25px;
+    height: 25px;
+    color: #102b3e;
+}
