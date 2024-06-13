@@ -15,16 +15,20 @@ const CreditCardForm = ({user, haveProducts, sumCart, setIsOpen}) => {
   const [isOpenModal, setIsOpenModal] = useState(false)
   const [isValidCard, setIsValidCard] = useState("")
 
+  const [activeInpError, setActiveInpError] = useState({})
+
   //проверка валидации
   const checkValidation = (dataCreditCard)=> {
     
     const number = Number(dataCreditCard.number)
     if(isNaN(number)){
+      setActiveInpError(prev=> ({"number": true}))
       return  "Номер карты невалиден"
     }
 
     const name = Number(dataCreditCard.name)
     if(!isNaN(name)){
+      setActiveInpError(prev=> ({"name": true}))
       return  "имя невалидно"
     }
 
@@ -32,14 +36,18 @@ const CreditCardForm = ({user, haveProducts, sumCart, setIsOpen}) => {
     const cardYear = dataCreditCard.expiry.slice(-2)
     const cardMonth = Number(dataCreditCard.expiry.slice(0, 2))
     if(cardYear < currentYear.slice(-2) || (cardMonth <= 0 || cardMonth > 12)){
+
+      setActiveInpError(prev=> ({"expiry": true}))
       return "месяц или год невалиден"
     }
 
     const cvc = Number(dataCreditCard.cvc)
     if(isNaN(cvc)){
+      setActiveInpError(prev=> ({"cvc": true}))
       return "код CVC невалиден"
     }
 
+    setActiveInpError(prev=> ({}))
     setIsValidCard("")
     return ""
   }
@@ -54,7 +62,8 @@ const CreditCardForm = ({user, haveProducts, sumCart, setIsOpen}) => {
     console.log(state)
     const resultValid = checkValidation(state)
     if(resultValid !== "") {
-      console.log(resultValid)
+      console.log("resultValid >> ", resultValid)
+      console.log("activ >> ", activeInpError)
       setIsValidCard(resultValid)
       return
     }
@@ -153,7 +162,7 @@ const CreditCardForm = ({user, haveProducts, sumCart, setIsOpen}) => {
             <input
                 type="tel"
                 name="number"
-                className="form-control"
+                className={`form-control ${activeInpError["number"] ? "inp_error" : ""}`}
                 placeholder="Card Number"
                 maxLength="22"
                 minLength="16"
@@ -165,7 +174,7 @@ const CreditCardForm = ({user, haveProducts, sumCart, setIsOpen}) => {
             <input
             type="text"
             name="name"
-            className="form-control"
+            className={`form-control ${activeInpError["name"] ? "inp_error" : ""}`}
             placeholder="Name"
             required
             value={state.name}
@@ -176,7 +185,7 @@ const CreditCardForm = ({user, haveProducts, sumCart, setIsOpen}) => {
                 <input
                 type="tel"
                 name="expiry"
-                className="form-control"
+                className={`form-control ${activeInpError["expiry"] ? "inp_error" : ""}`}
                 placeholder="11/11"
                 pattern="\d\d/\d\d"
                 required
@@ -187,7 +196,7 @@ const CreditCardForm = ({user, haveProducts, sumCart, setIsOpen}) => {
                 <input
                 type="tel"
                 name="cvc"
-                className="form-control"
+                className={`form-control ${activeInpError["cvc"] ? "inp_error" : ""}`}
                 placeholder="CVC"
                 maxLength="4"
                 minLength="3"

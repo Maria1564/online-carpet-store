@@ -61,3 +61,7 @@
     margin: 0 auto;
     display: block;
 }
+
+.credit_card_form .inp_error {
+    border-color: red;
+}
