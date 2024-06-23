@@ -194,7 +194,7 @@ const CreditCardForm = ({user, haveProducts, sumCart, setIsOpen}) => {
                 onFocus={handleInputFocus}
                 />
                 <input
-                type="tel"
+                type="password"
                 name="cvc"
                 className={`form-control ${activeInpError["cvc"] ? "inp_error" : ""}`}
                 placeholder="CVC"
